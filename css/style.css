@@ -2437,7 +2437,7 @@ iframe {
   color: #007dab;
 }
 .theme-main-menu.white-vr.fixed {
-  background: #000;
+  background: #012a3a;
   border: none;
 }
 .theme-main-menu .dropdown-toggle::after {
@@ -3344,7 +3344,7 @@ iframe {
 }
 
 .fancy-banner-five {
-  background: url(../images/es/confident-businesspeople-standing-in-office-2025-04-04-20-28-40-utc.jpg) no-repeat center;
+  background: url(../images/media/img_25.jpg) no-repeat center;
   background-size: cover;
   background-attachment: fixed;
 }
