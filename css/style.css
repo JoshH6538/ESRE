@@ -3650,19 +3650,19 @@ iframe {
   background: #fff;
 }
 .fancy-banner-nine .fact-wrapper .fact-box:nth-child(2) {
-  background: #FFF9F7;
+  background: #daeef6;
 }
 .fancy-banner-nine .fact-wrapper .fact-box:nth-child(2):before {
-  background: #FFF9F7;
+  background: #daeef6;
 }
 .fancy-banner-nine .fact-wrapper .fact-box:nth-child(3) {
-  background: #FFF3EF;
+  background: #c2e3ed;
 }
 .fancy-banner-nine .fact-wrapper .fact-box:nth-child(3):before {
-  background: #FFF3EF;
+  background: #c2e3ed;
 }
 .fancy-banner-nine .fact-wrapper .fact-box:nth-child(4) {
-  background: #FFE9E2;
+  background: #a9cfdc;
   border: none;
 }
 .fancy-banner-nine .fact-wrapper .fact-box:nth-child(4):before {
@@ -4251,7 +4251,7 @@ iframe {
 }
 
 .block-feature-fourteen {
-  background: #141414;
+  background: #012a3a;
 }
 .block-feature-fourteen .card-bg-wrapper {
   padding: 15px 50px 55px;
