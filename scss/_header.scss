@@ -151,7 +151,7 @@
         .nav-item .nav-link {color: #fff;}
         .nav-item:hover .nav-link {color: $color-one;}
         &.fixed {
-            background: #000;
+            background: $color-two;
             border: none;
         }
     }
