@@ -44,7 +44,8 @@
 // Agent Card One
 .agent-card-one {
     .img {
-        overflow: hidden;
+        // overflow: hidden;
+        overflow: visible;
         margin-bottom: 35px;
         &.border-20 {
             border-radius: 20px;

@@ -3,6 +3,7 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
+// Add a background color to the banner to let it stand out
 #banner-p {
     display: inline-block;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.879);
@@ -25,12 +26,22 @@
 // body {
 //     color: red !important
 // }
+// Changes the background color of the feedback section
 .feedback-section-six {
     background-color: $color-three;
 }
-
+// Changes the background image of the contact section
 .fancy-banner-five {
   background: url(../images/es/confident-businesspeople-standing-in-office-2025-04-04-20-28-40-utc.jpg) no-repeat center;
   background-size: cover;
   background-attachment: fixed;
+}
+
+.agent-section-one {
+    padding-top: 5vw;
+}
+
+// Make circle icons extend outside the container
+.slick-track, .slick-list, .agent-slider-one {
+    overflow: visible;
 }
