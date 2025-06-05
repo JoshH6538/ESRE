@@ -3344,7 +3344,7 @@ iframe {
 }
 
 .fancy-banner-five {
-  background: url(../images/media/img_25.jpg) no-repeat center;
+  background: url(../images/es/confident-businesspeople-standing-in-office-2025-04-04-20-28-40-utc.jpg) no-repeat center;
   background-size: cover;
   background-attachment: fixed;
 }
@@ -16478,6 +16478,11 @@ html.with-fancybox body.hide-scrollbar {
   border-radius: 10px;
   padding: 0;
   margin-top: 10px;
+  width: auto;
+}
+
+.feedback-section-six {
+  background-color: #d8d8d8;
 }
 
 /*# sourceMappingURL=style.css.map */
