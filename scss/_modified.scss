@@ -1,0 +1,14 @@
+/* Add text shadow to banner text */
+.hero-heading {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+#banner-p {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.786);
+    font-weight: bold;
+    font-size: 1.5rem;
+    background: rgba(3, 3, 3, 0.207);
+    border-radius: 10px;
+    padding: 0;
+    margin-top: 10px;
+}
