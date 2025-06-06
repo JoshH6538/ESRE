@@ -901,8 +901,19 @@
 					<!-- /.wrapper -->
 
 					<div class="section-btn text-center md-mt-60">
-						<a href="agent.html" class="btn-one fw-normal">Meet Entire Team</a>
+						<!-- <a href="agent.html" class="btn-one fw-normal">Meet Entire Team</a> -->
+						 <a class="btn-one fw-normal" id="allRealtors">Meet Entire Team</a> 
 					</div>
+
+					<script type="module">
+						import {allRealtors} from './retool-api.js'
+						document.getElementById('allRealtors').addEventListener('click', async () => {
+							console.log('Fetching all realtors...');
+							const result = await allRealtors();
+							console.log(result);
+						});
+					</script>
+
 				</div>
 			</div>
 		</div>
