@@ -16498,8 +16498,9 @@ html.with-fancybox body.hide-scrollbar {
   padding-top: 5vw;
 }
 
-.slick-track, .slick-list, .agent-slider-one {
-  overflow: visible;
+.slick-track, .slick-list, .agent-slider-one, .stretched-link, .agent-card-one {
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 
 /*# sourceMappingURL=style.css.map */

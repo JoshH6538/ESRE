@@ -42,6 +42,18 @@
 }
 
 // Make circle icons extend outside the container
-.slick-track, .slick-list, .agent-slider-one {
-    overflow: visible;
+.slick-track, .slick-list, .agent-slider-one, .stretched-link, .agent-card-one {
+    overflow-x: hidden;
+  overflow-y: visible;
 }
+
+// #team-container {
+//     background-color: red;
+//     overflow: visible;
+//      overflow-x: hidden;
+//     overflow-y: visible;
+// }
+// .agent-card-one img {
+//     overflow-x: hidden;
+//     overflow-y: visible;
+// }
