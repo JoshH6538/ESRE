@@ -1,9 +1,8 @@
-import { credentials } from "./credentials.js";
 const debug = false;
 
 const BASE_URL = debug
   ? "http://localhost:3000/api/realtors"
-  : credentials.AWS_API_URL;
+  : "https://v3tnqbn900.execute-api.us-east-1.amazonaws.com";
 
 export async function findRealtorById(id) {
   try {
