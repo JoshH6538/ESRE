@@ -62,18 +62,14 @@ document.getElementById("realtorSearchForm").addEventListener("submit", (e) => {
     const name = `${realtor["First Name"] ?? ""} ${
       realtor["Last Name"] ?? ""
     }`.toLowerCase();
-    // Convert DRE # and Home Address to lowercase
-    const dre = (realtor["DRE #"] ?? "").toLowerCase();
-    const homeAddress = (realtor["Home Address"] ?? "").toLowerCase();
 
-    // Extract ZIP (5-digit number) from Home Address
-    const zipMatch = homeAddress.match(/\b\d{5}\b/);
-    const zip = zipMatch ? zipMatch[0] : "";
+    // Convert DRE # and Zipcode to lowercase
+    const dre = (realtor["DRE #"] ?? "").toLowerCase();
+    const zip = (realtor["Zipcode"] ?? "").toLowerCase(); // new Zipcode field
 
     // Return true if any of the fields match the query
     return name.includes(query) || dre.includes(query) || zip.includes(query);
   });
-
   renderRealtors(filtered);
   //   If no realtors match the search, display a message
   if (filtered.length === 0) {
