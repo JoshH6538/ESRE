@@ -62,7 +62,6 @@ document.getElementById("realtorSearchForm").addEventListener("submit", (e) => {
     const name = `${realtor["First Name"] ?? ""} ${
       realtor["Last Name"] ?? ""
     }`.toLowerCase();
-
     // Convert DRE # and Zipcode to lowercase
     const dre = (realtor["DRE #"] ?? "").toLowerCase();
     const zip = (realtor["Zipcode"] ?? "").toLowerCase(); // new Zipcode field
