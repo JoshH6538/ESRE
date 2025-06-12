@@ -1,20 +1,19 @@
 /* Add text shadow to banner text */
 .hero-heading {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgb(0, 0, 0);
 }
 
 // Add a background color to the banner to let it stand out
 #banner-p {
   display: inline-block;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.879);
+  text-shadow: 2px 2px 4px rgb(0, 0, 0);
   font-weight: bold;
   font-size: 1.5rem;
-  background: rgba(45, 45, 45, 0.229);
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 10px;
-  padding-top: 0px;
   width: auto;
+}
+
+#navbarNav > ul > li > a {
+  font-size: larger;
 }
 
 // .theme-main-menu.menu-overlay {
@@ -40,22 +39,10 @@
   padding-top: 5vw;
 }
 
-// Make circle icons extend outside the container
-.slick-track,
-.slick-list,
-.agent-slider-one,
-.agent-card-one {
-  overflow-x: hidden;
-  overflow-y: visible;
+.logo-img {
+  transition: transform 0.3s ease;
 }
 
-// #team-container {
-//     background-color: red;
-//     overflow: visible;
-//      overflow-x: hidden;
-//     overflow-y: visible;
-// }
-// .agent-card-one img {
-//     overflow-x: hidden;
-//     overflow-y: visible;
-// }
+.logo-link:hover .logo-img {
+  transform: scale(1.05);
+}

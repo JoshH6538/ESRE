@@ -110,11 +110,11 @@ p {
 }
 
 .bg-pink-two {
-  background: #f5ede8;
+  background: #000000;
 }
 
 .bg-pink-three {
-  background: #faf1ec;
+  background: #ffffff;
 }
 
 .bg-light {
@@ -1902,8 +1902,8 @@ iframe {
   margin-right: 5px;
 }
 .btn-one:hover, .btn-one:focus {
-  background: #000;
-  border-color: #000;
+  background: #012a3a;
+  border-color: #007dab;
   color: #fff;
 }
 .btn-one.white-vr {
@@ -1976,7 +1976,7 @@ iframe {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0C0C0C;
+  background: #0c0c0c;
   color: #fff;
   font-size: 1.3em;
   -webkit-transition: all 0.3s ease-in-out 0s;
@@ -1992,7 +1992,7 @@ iframe {
   background: #007dab;
 }
 .btn-four.inverse:hover, .btn-four.inverse:focus {
-  background: #0C0C0C;
+  background: #0c0c0c;
 }
 
 .btn-five {
@@ -2449,12 +2449,12 @@ iframe {
   font-weight: 900;
   font-size: 12px;
 }
-.theme-main-menu .dashboard-menu .nav-link::after {
+.theme-main-menu .active-menu .nav-link::after {
   content: "";
   display: inline-block;
   width: 10px;
   height: 10px;
-  background: url(../images/shape/shape_79.svg) no-repeat center;
+  background: url(../images/es/svg/shape_79.svg) no-repeat center;
   background-size: cover;
   margin-left: 5px;
   vertical-align: 2px;
@@ -2559,10 +2559,11 @@ iframe {
 }
 
 .theme-main-menu .alert-wrapper {
-  background: #453A34;
+  background: #453a34;
   padding: 8px 12px;
 }
-.theme-main-menu .alert-wrapper a, .theme-main-menu .alert-wrapper span {
+.theme-main-menu .alert-wrapper a,
+.theme-main-menu .alert-wrapper span {
   color: #007dab;
 }
 .theme-main-menu .login-btn-one {
@@ -2638,6 +2639,15 @@ iframe {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+  .navbar .dropdown-toggle::after {
+    display: inline-block;
+    margin-left: 0.3em;
+    vertical-align: 0.1em;
+    transition: transform 0.3s ease;
+  }
+  .navbar .dropdown:hover > .dropdown-toggle::after {
+    transform: rotate(180deg);
+  }
   .navbar .dropdown-menu {
     font-size: 1em;
     z-index: 5;
@@ -2677,9 +2687,6 @@ iframe {
     visibility: visible;
     transform: translateY(0);
   }
-  .navbar .show.dropdown-toggle::after {
-    transform: rotate(180deg);
-  }
 }
 /*----- For Mobile ----*/
 @media screen and (max-width: 991px) {
@@ -2691,7 +2698,7 @@ iframe {
     padding-left: 12px;
   }
   .white-vr .navbar-collapse {
-    background-color: #000;
+    background-color: #012a3a;
   }
   .navbar-collapse {
     position: fixed;
@@ -3130,6 +3137,7 @@ iframe {
 }
 
 .hero-banner-eight {
+  height: 100vh;
   background: url(../images/es/small/city-small.jpg) no-repeat center top;
   background-size: cover;
 }
@@ -10553,7 +10561,7 @@ iframe {
 }
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-title h6 a:hover {
   text-decoration: underline;
-  color: #faf1ec;
+  color: #ffffff;
 }
 .dashboard-body .recent-job-tab .wrapper .job-item-list .job-title .meta {
   font-size: 14px;
@@ -10752,7 +10760,7 @@ iframe {
 }
 .dashboard-body .dash-input-wrapper .skills-wrapper ul li.is_tag button {
   font-size: 15px;
-  color: #faf1ec;
+  color: #ffffff;
   line-height: 42px;
   padding: 0 40px 0 22px;
   background: #FFFFFF;
@@ -11275,7 +11283,7 @@ iframe {
   margin-right: 15px;
 }
 .dashboard-body .message-wrapper .open-email-container .email-footer .attachments .file:hover {
-  background: rgba(250, 241, 236, 0.03);
+  background: rgba(255, 255, 255, 0.03);
 }
 .dashboard-body .message-wrapper .open-email-container .email-footer .attachments .file .icon {
   width: 37px;
@@ -16472,20 +16480,19 @@ html.with-fancybox body.hide-scrollbar {
 
 /* Add text shadow to banner text */
 .hero-heading {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 2px 2px 4px rgb(0, 0, 0);
 }
 
 #banner-p {
   display: inline-block;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.879);
+  text-shadow: 2px 2px 4px rgb(0, 0, 0);
   font-weight: bold;
   font-size: 1.5rem;
-  background: rgba(45, 45, 45, 0.229);
-  padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 10px;
-  padding-top: 0px;
   width: auto;
+}
+
+#navbarNav > ul > li > a {
+  font-size: larger;
 }
 
 .feedback-section-six {
@@ -16502,12 +16509,12 @@ html.with-fancybox body.hide-scrollbar {
   padding-top: 5vw;
 }
 
-.slick-track,
-.slick-list,
-.agent-slider-one,
-.agent-card-one {
-  overflow-x: hidden;
-  overflow-y: visible;
+.logo-img {
+  transition: transform 0.3s ease;
+}
+
+.logo-link:hover .logo-img {
+  transform: scale(1.05);
 }
 
 /*# sourceMappingURL=style.css.map */
