@@ -16,9 +16,11 @@ function renderRealtors(data) {
   const container = document.getElementById("realtorContainer");
   container.innerHTML = ""; // Clear existing
 
-  //for each realtor, create a column and append it to the container
   data.forEach((realtor) => {
-    console.log("ICON URL:", realtor.iconURL);
+    const iconURL =
+      realtor["iconURL"] && realtor["iconURL"].trim() !== ""
+        ? realtor["iconURL"]
+        : "images/lazy.svg";
 
     const col = document.createElement("div");
     col.className = "col-xl-3 col-md-4 col-sm-6";
@@ -26,33 +28,33 @@ function renderRealtors(data) {
     col.innerHTML = `
       <div class="agent-card-two position-relative z-1 mb-50 wow fadeInUp">
         <div class="media ${
-          realtor["iconURL"] ? "bg-white" : "bg-dark"
+          iconURL !== "images/lazy.svg" ? "bg-white" : "bg-dark"
         } position-relative overflow-hidden">
-
           <div class="tag bg-white position-absolute text-uppercase">DRE #: ${
             realtor["dre"] ?? "DRE #"
           }</div>
           <img
-  loading="lazy"
-  src="${realtor["iconURL"] ?? "images/lazy.svg"}"
-  class="agent-img w-100 tran5s"
-  alt=""
->
-
+            loading="lazy"
+            src="${iconURL}"
+            class="agent-img w-100 tran5s"
+            alt=""
+          >
         </div>
         <div class="text-center pt-30">
           <h6 class="name">
-            <a href="agent_details.html">${realtor["firstName"] ?? "First"} ${
-      realtor["lastName"] ?? "Last"
-    }</a>
+            <a href="agent_details.html?userId=${realtor["userId"]}">${
+      realtor["firstName"] ?? "First"
+    } ${realtor["lastName"] ?? "Last"}</a>
           </h6>
           <div class="designation">${realtor["title"] ?? "Agent"}</div>
         </div>
       </div>
     `;
+
     container.appendChild(col);
   });
 }
+
 // This function updates the total number of results displayed
 function updateResultsCount(count) {
   const totalSpan = document.getElementById("total");
@@ -80,7 +82,11 @@ document.getElementById("realtorSearchForm").addEventListener("submit", (e) => {
     // Return true if any of the fields match the query
     return name.includes(query) || dre.includes(query);
   });
-  renderRealtors(filtered);
+  const currentSort = document.getElementById("sortSelect").value;
+  const sortedFiltered = sortRealtors(filtered, currentSort);
+  renderRealtors(sortedFiltered);
+  updateResultsCount(sortedFiltered.length);
+
   //   If no realtors match the search, display a message
   if (filtered.length === 0) {
     const container = document.getElementById("realtorContainer");
@@ -89,6 +95,26 @@ document.getElementById("realtorSearchForm").addEventListener("submit", (e) => {
 
   // Update the results count
   updateResultsCount(filtered.length);
+});
+
+function sortRealtors(data, sortBy) {
+  const [key, order] = sortBy.split("-");
+
+  return data.slice().sort((a, b) => {
+    const valA = (a[key] ?? "").toLowerCase();
+    const valB = (b[key] ?? "").toLowerCase();
+
+    if (valA < valB) return order === "asc" ? -1 : 1;
+    if (valA > valB) return order === "asc" ? 1 : -1;
+    return 0;
+  });
+}
+document.getElementById("sortSelect").addEventListener("change", (e) => {
+  console.log("Changes");
+  const sorted = sortRealtors(allRealtorsData, e.target.value);
+  console.log("Realtors sorted:", allRealtorsData);
+  renderRealtors(sorted);
+  updateResultsCount(sorted.length);
 });
 
 window.addEventListener("DOMContentLoaded", loadRealtors);

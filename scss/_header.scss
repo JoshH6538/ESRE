@@ -62,7 +62,7 @@
     position: fixed;
     left: 0;
     right: 0;
-    background: #fff;
+    background: $color-two;
     box-shadow: 0 13px 35px -12px rgb(35 35 35 / 10%);
     .alert-wrapper {
       display: none;
@@ -142,7 +142,7 @@
     font-weight: 500;
     font-size: 18px;
     line-height: initial;
-    color: $text-dark;
+    color: $text-light;
     padding: 10px 0;
     margin: 0 18px;
     position: relative;

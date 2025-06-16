@@ -6,6 +6,7 @@ const BASE_URL = debug
 
 export async function findRealtorById(id) {
   try {
+    console.log("Fetching realtor by ID:", id);
     const response = await fetch(BASE_URL, {
       method: "POST",
       headers: {
@@ -13,7 +14,7 @@ export async function findRealtorById(id) {
       },
       body: JSON.stringify({
         type: "findRealtor",
-        _id: { $oid: id },
+        userId: id,
       }),
     });
 

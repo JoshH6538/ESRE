@@ -14,6 +14,7 @@
 
 #navbarNav > ul > li > a {
   font-size: larger;
+  color: $text-light;
 }
 
 // .theme-main-menu.menu-overlay {
@@ -45,4 +46,28 @@
 
 .logo-link:hover .logo-img {
   transform: scale(1.05);
+}
+
+.mod-span {
+  color: $color-one;
+  font-family: "Times New Roman", Times, serif;
+  font-style: italic;
+}
+
+body {
+  word-spacing: 3px;
+}
+
+#logo-img-tag {
+  background-color: #ffffff;
+  box-shadow: none;
+}
+
+#navbarNav2 > ul > li.nav-item > a {
+  font-size: larger;
+  color: $text-dark;
+}
+
+#contact-header {
+  background-color: $color-two;
 }
