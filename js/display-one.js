@@ -1,30 +1,61 @@
 import { findRealtorById } from "./retool-api.js";
+import { getBranches, arrayToMap } from "./branch-data.js";
+import { getUserData } from "./user-data.js";
 
 const userId = new URLSearchParams(window.location.search).get("userId");
-var retryCount = 0;
-async function loadUser(userId) {
-  console.log("Loading user...");
-  var user = await findRealtorById(userId);
-  if (!user || user.length === 0 || user["message"]) {
-    console.warn("No realtor found or API call failed.");
-    console.log("retryCount:", retryCount);
-    if (retryCount < 3) {
-      // Limit retries to avoid infinite loop
-      setTimeout(() => {
-        retryCount++;
-      }, 5000);
-      loadUser(user);
-    } // Retry after 5 seconds
+// var retryCount = 0;
+// async function loadUser(userId) {
+//   console.log("Loading user...");
+//   var user = await findRealtorById(userId);
+//   if (!user || user.length === 0 || user["message"]) {
+//     console.warn("No realtor found or API call failed.");
+//     console.log("retryCount:", retryCount);
+//     if (retryCount < 3) {
+//       // Limit retries to avoid infinite loop
+//       setTimeout(() => {
+//         retryCount++;
+//       }, 5000);
+//       loadUser(user);
+//     } // Retry after 5 seconds
+//   }
+//   renderUser(user);
+//   // console.log("User data loaded:", user);
+// }
+
+async function loadUserCached(userId) {
+  console.log("Loading user from cache...");
+
+  const raw = localStorage.getItem("userCache");
+  if (!raw) {
+    console.warn("No userCache found.");
+    return;
   }
+
+  let userList;
+  try {
+    userList = JSON.parse(raw); // Expecting an array
+  } catch {
+    console.error("userCache is corrupted.");
+    return;
+  }
+
+  // If the cache was saved as an object/map instead of an array, convert it
+  const users = Array.isArray(userList) ? userList : Object.values(userList);
+
+  const user = users.find((u) => u.userId === userId);
+
+  if (!user) {
+    console.warn(`No user found for ID: ${userId}`);
+    return;
+  }
+
   renderUser(user);
-  // console.log("User data loaded:", user);
 }
 
 async function renderUser(user) {
-  const raw = localStorage.getItem("branchCache");
-  var branches = new Map();
-  if (raw) {
-    branches = JSON.parse(raw);
+  const branches = arrayToMap(await getBranches(), "branchId");
+  if (!branches || branches.size === 0) {
+    console.warn("No branches found or API call failed.");
   }
   const container = document.getElementById("userContainer");
   container.innerHTML = ""; // Clear existing content
@@ -47,7 +78,7 @@ async function renderUser(user) {
             </tr>
             <tr>
               <td>Branch:</td>
-              <td>${branches[user["branchId"]]["name"] ?? "N/A"}</td>
+              <td>${branches.get(user["branchId"])?.name ?? "N/A"}</td>
             </tr>
             <tr>
               <td>Phone:</td>
@@ -108,7 +139,7 @@ async function renderUser(user) {
     realtorImageWrapper.classList.add("bg-white");
   }
 
-  const branchName = branches[user.branchId]?.name ?? "Unknown Branch";
+  const branchName = branches.get(user.branchId)?.name ?? "Unknown Branch";
 
   // Set the background image dynamically
   realtorImageWrapper.style.backgroundImage = `url(${iconURL})`;
@@ -121,4 +152,8 @@ async function renderUser(user) {
 `;
 }
 
-window.addEventListener("DOMContentLoaded", loadUser(userId));
+window.addEventListener("DOMContentLoaded", async () => {
+  await getUserData(); // If this populates userCache
+  await getBranches(); // Loads branchCache
+  await loadUserCached(userId); // Reads from userCache and renders
+});

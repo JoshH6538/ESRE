@@ -30,7 +30,7 @@
 }
 // Changes the background image of the contact section
 .fancy-banner-five {
-  background: url(../images/es/confident-businesspeople-standing-in-office-2025-04-04-20-28-40-utc.jpg)
+  background: url(../images/es/small/confident-businesspeople-standing-in-office-2025-04-04-20-28-40-utc.jpg)
     no-repeat center;
   background-size: cover;
   background-attachment: fixed;
@@ -67,6 +67,13 @@ body {
   font-size: larger;
   color: $text-dark;
 }
+
+// #header2 {
+//   &.fixed {
+//     background-color: $color-one;
+//     color: white !important;
+//   }
+// }
 
 #contact-header {
   background-color: $color-two;

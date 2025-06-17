@@ -1,18 +1,16 @@
 import { allRealtors } from "./retool-api.js";
-import { getBranches } from "./branch-data.js";
+import { getBranches, arrayToMap } from "./branch-data.js";
 import { getUserData } from "./user-data.js";
 
-let allRealtorsData = [];
-
-// This function loads all realtors and renders them on the page
-// allRealtorsData is updated with the full list of realtors
+let allRealtorsData = []; // now an array
+let branchMap = new Map(); // Initialize branchMap
+// Load realtors from localStorage as a JSON array
 async function loadRealtors() {
   const raw = localStorage.getItem("userCache");
-  let allRealtorsData = {};
 
   if (raw) {
     try {
-      allRealtorsData = JSON.parse(raw);
+      allRealtorsData = JSON.parse(raw); // no Object.values needed
     } catch {
       console.error("userCache is corrupted");
       return;
@@ -22,32 +20,32 @@ async function loadRealtors() {
     return;
   }
 
-  const realtorArray = Object.values(allRealtorsData);
-  renderRealtors(realtorArray);
-  updateResultsCount(realtorArray.length);
+  renderRealtors(allRealtorsData);
+  updateResultsCount(allRealtorsData.length);
 }
 
+// Render the cards
 function renderRealtors(realtorArray) {
   let branches = {};
   const raw = localStorage.getItem("branchCache");
   if (raw) {
     branches = JSON.parse(raw);
   }
-
+  branchMap = arrayToMap(branches, "branchId"); // Ensure branches is a map
   console.log("Rendering Realtors:", realtorArray);
-  console.log("Fetching Branches:", branches);
+  console.log("Using Branches:", branchMap);
 
   const container = document.getElementById("realtorContainer");
   container.innerHTML = "";
 
   for (const realtor of realtorArray) {
     const iconURL =
-      realtor["iconURL"] && realtor["iconURL"].trim() !== ""
-        ? realtor["iconURL"]
+      realtor.iconURL && realtor.iconURL.trim() !== ""
+        ? realtor.iconURL
         : "images/lazy.svg";
 
-    const branchName = branches[realtor.branchId]?.name ?? "Unknown Branch";
-
+    const branch = branchMap.get(realtor.branchId);
+    const branchName = branch?.name ?? "Unknown Branch";
     const col = document.createElement("div");
     col.className = "col-xl-3 col-md-4 col-sm-6";
 
@@ -66,9 +64,9 @@ function renderRealtors(realtorArray) {
         </div>
         <div class="text-center pt-30">
           <h6 class="name">
-            <a href="realtor_details.html?userId=${realtor.userId}">${
-      realtor.firstName ?? "First"
-    } ${realtor.lastName ?? "Last"}</a>
+            <a href="realtor_details.html?userId=${realtor.userId}">
+              ${realtor.firstName ?? "First"} ${realtor.lastName ?? "Last"}
+            </a>
           </h6>
           <div class="designation">${realtor.title ?? "Agent"}</div>
         </div>
@@ -79,14 +77,13 @@ function renderRealtors(realtorArray) {
   }
 }
 
-// This function updates the total number of results displayed
+// Update results count
 function updateResultsCount(count) {
   const totalSpan = document.getElementById("total");
   if (totalSpan) totalSpan.textContent = count;
 }
 
-// Search bar functionality
-// Event listener for the search form submission
+// Search form handler
 document.getElementById("realtorSearchForm").addEventListener("submit", (e) => {
   e.preventDefault();
   const query = document
@@ -95,32 +92,32 @@ document.getElementById("realtorSearchForm").addEventListener("submit", (e) => {
     .toLowerCase();
 
   const filtered = allRealtorsData.filter((realtor) => {
-    // Combine first name, lastName, and convert to lowercase
-    const name = `${realtor["firstName"] ?? ""} ${
-      realtor["lastName"] ?? ""
+    const name = `${realtor.firstName ?? ""} ${
+      realtor.lastName ?? ""
     }`.toLowerCase();
-    // Convert DRE # and Zipcode to lowercase
-    const dre = (realtor["dre"] ?? "").toLowerCase();
-    // const zip = (realtor["zipcode"] ?? "").toLowerCase(); // new Zipcode field
-
-    // Return true if any of the fields match the query
-    return name.includes(query) || dre.includes(query);
+    const dre = (realtor.dre ?? "").toLowerCase();
+    const branchName = (
+      branchMap.get(realtor.branchId)?.name ?? ""
+    ).toLowerCase();
+    return (
+      name.includes(query) || dre.includes(query) || branchName.includes(query)
+    );
   });
+
   const currentSort = document.getElementById("sortSelect").value;
   const sortedFiltered = sortRealtors(filtered, currentSort);
-  renderRealtors(sortedFiltered);
-  updateResultsCount(sortedFiltered.length);
 
-  //   If no realtors match the search, display a message
-  if (filtered.length === 0) {
-    const container = document.getElementById("realtorContainer");
-    container.innerHTML = "<p>No realtors found.</p>";
+  if (sortedFiltered.length === 0) {
+    document.getElementById("realtorContainer").innerHTML =
+      "<p>No realtors found.</p>";
+  } else {
+    renderRealtors(sortedFiltered);
   }
 
-  // Update the results count
-  updateResultsCount(filtered.length);
+  updateResultsCount(sortedFiltered.length);
 });
 
+// Sort function
 function sortRealtors(data, sortBy) {
   const [key, order] = sortBy.split("-");
 
@@ -133,17 +130,17 @@ function sortRealtors(data, sortBy) {
     return 0;
   });
 }
+
+// Sort dropdown listener
 document.getElementById("sortSelect").addEventListener("change", (e) => {
-  console.log("Changes");
   const sorted = sortRealtors(allRealtorsData, e.target.value);
-  console.log("Realtors sorted:", allRealtorsData);
   renderRealtors(sorted);
   updateResultsCount(sorted.length);
 });
 
+// Initial setup
 window.addEventListener("DOMContentLoaded", async () => {
-  await getUserData(); // optional pre-load
-  await getBranches(); // populates branchCache
-
-  await loadRealtors(); // handles full load
+  await getUserData(); // If this populates userCache
+  await getBranches(); // Loads branchCache
+  await loadRealtors(); // Reads from userCache and renders
 });

@@ -22,25 +22,27 @@ export async function getBranches() {
   }
   console.log("Branches fetched:", branches);
 
-  // Convert array to hash map: { id1: branch1, id2: branch2, ... }
-  const branchMap = new Map();
-  for (const branch of branches) {
-    if (branch.branchId) {
-      branchMap.set(branch.branchId, branch);
-    }
-  }
-
   // Cache for future use
-  localStorage.setItem(
-    BRANCH_CACHE_KEY,
-    JSON.stringify(Object.fromEntries(branchMap))
-  );
+  localStorage.setItem(BRANCH_CACHE_KEY, JSON.stringify(branches));
 
   // clearBranchCache();
 
-  return branchMap;
+  return branches;
 }
 
 export function clearBranchCache() {
   localStorage.removeItem(BRANCH_CACHE_KEY);
+}
+
+export function arrayToMap(array, keyField) {
+  const map = new Map();
+
+  for (const item of array) {
+    const key = item[keyField];
+    if (key !== undefined && key !== null) {
+      map.set(key, item);
+    }
+  }
+
+  return map;
 }

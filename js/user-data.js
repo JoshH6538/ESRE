@@ -22,19 +22,10 @@ export async function getUserData() {
   }
   console.log("Users fetched:", users);
 
-  // Convert array to plain object: { userId1: user1, userId2: user2, ... }
-  const userMap = {};
-  for (const user of users) {
-    if (user.userId) {
-      userMap[user.userId] = user;
-    }
-  }
-
   // Cache for future use
-  localStorage.setItem(USER_CACHE_KEY, JSON.stringify(userMap));
-  console.log("User map cached:", userMap);
+  localStorage.setItem("userCache", JSON.stringify(users));
 
-  return userMap;
+  return users;
 }
 
 export function clearuserCache() {
