@@ -1,26 +1,52 @@
-import { allRealtorUsers } from "./retool-api.js";
+import { allRealtors } from "./retool-api.js";
+import { getBranches } from "./branch-data.js";
+import { getUserData } from "./user-data.js";
 
 let allRealtorsData = [];
 
 // This function loads all realtors and renders them on the page
 // allRealtorsData is updated with the full list of realtors
 async function loadRealtors() {
-  console.log("Loading realtors...");
-  allRealtorsData = await allRealtorUsers(); // Save the full list
-  console.log("Realtors loaded:", allRealtorsData);
-  renderRealtors(allRealtorsData);
-  updateResultsCount(allRealtorsData.length);
+  const raw = localStorage.getItem("userCache");
+  let allRealtorsData = {};
+
+  if (raw) {
+    try {
+      allRealtorsData = JSON.parse(raw);
+    } catch {
+      console.error("userCache is corrupted");
+      return;
+    }
+  } else {
+    console.warn("No realtor data in localStorage");
+    return;
+  }
+
+  const realtorArray = Object.values(allRealtorsData);
+  renderRealtors(realtorArray);
+  updateResultsCount(realtorArray.length);
 }
 
-function renderRealtors(data) {
-  const container = document.getElementById("realtorContainer");
-  container.innerHTML = ""; // Clear existing
+function renderRealtors(realtorArray) {
+  let branches = {};
+  const raw = localStorage.getItem("branchCache");
+  if (raw) {
+    branches = JSON.parse(raw);
+  }
 
-  data.forEach((realtor) => {
+  console.log("Rendering Realtors:", realtorArray);
+  console.log("Fetching Branches:", branches);
+
+  const container = document.getElementById("realtorContainer");
+  container.innerHTML = "";
+
+  for (const realtor of realtorArray) {
     const iconURL =
       realtor["iconURL"] && realtor["iconURL"].trim() !== ""
         ? realtor["iconURL"]
         : "images/lazy.svg";
+
+    const branchName = branches[realtor.branchId]?.name ?? "Unknown Branch";
 
     const col = document.createElement("div");
     col.className = "col-xl-3 col-md-4 col-sm-6";
@@ -30,9 +56,7 @@ function renderRealtors(data) {
         <div class="media ${
           iconURL !== "images/lazy.svg" ? "bg-white" : "bg-dark"
         } position-relative overflow-hidden">
-          <div class="tag bg-white position-absolute text-uppercase">DRE #: ${
-            realtor["dre"] ?? "DRE #"
-          }</div>
+          <div class="tag bg-white position-absolute text-uppercase">${branchName}</div>
           <img
             loading="lazy"
             src="${iconURL}"
@@ -42,17 +66,17 @@ function renderRealtors(data) {
         </div>
         <div class="text-center pt-30">
           <h6 class="name">
-            <a href="agent_details.html?userId=${realtor["userId"]}">${
-      realtor["firstName"] ?? "First"
-    } ${realtor["lastName"] ?? "Last"}</a>
+            <a href="realtor_details.html?userId=${realtor.userId}">${
+      realtor.firstName ?? "First"
+    } ${realtor.lastName ?? "Last"}</a>
           </h6>
-          <div class="designation">${realtor["title"] ?? "Agent"}</div>
+          <div class="designation">${realtor.title ?? "Agent"}</div>
         </div>
       </div>
     `;
 
     container.appendChild(col);
-  });
+  }
 }
 
 // This function updates the total number of results displayed
@@ -117,4 +141,9 @@ document.getElementById("sortSelect").addEventListener("change", (e) => {
   updateResultsCount(sorted.length);
 });
 
-window.addEventListener("DOMContentLoaded", loadRealtors);
+window.addEventListener("DOMContentLoaded", async () => {
+  await getUserData(); // optional pre-load
+  await getBranches(); // populates branchCache
+
+  await loadRealtors(); // handles full load
+});

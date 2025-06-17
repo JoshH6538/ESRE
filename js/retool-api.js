@@ -46,7 +46,8 @@ export async function allRealtors() {
   }
 }
 
-export async function allRealtorUsers() {
+export async function allBranches() {
+  console.log("allBranches called");
   try {
     const response = await fetch(BASE_URL, {
       method: "POST",
@@ -54,7 +55,7 @@ export async function allRealtorUsers() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        type: "allRealtorUsers",
+        type: "allBranches",
       }),
     });
 
