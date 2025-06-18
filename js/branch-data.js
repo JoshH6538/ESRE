@@ -35,6 +35,10 @@ export function clearBranchCache() {
 }
 
 export function arrayToMap(array, keyField) {
+  if (!Array.isArray(array)) {
+    console.error("Expected array, got:", array);
+    return new Map();
+  }
   const map = new Map();
 
   for (const item of array) {
