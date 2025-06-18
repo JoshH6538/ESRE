@@ -38,8 +38,13 @@ export async function allRealtors() {
       }),
     });
 
+    if (!response.ok) {
+      console.error("API returned error status:", response.status);
+      return []; // prevent storing error
+    }
+
     const data = await response.json();
-    return data;
+    return Array.isArray(data) ? data : [];
   } catch (err) {
     console.error("Error fetching all realtors:", err);
     return [];
@@ -59,10 +64,15 @@ export async function allBranches() {
       }),
     });
 
+    if (!response.ok) {
+      console.error("API returned error status:", response.status);
+      return [];
+    }
+
     const data = await response.json();
-    return data;
+    return Array.isArray(data) ? data : [];
   } catch (err) {
-    console.error("Error fetching all realtors:", err);
+    console.error("Error fetching all branches:", err);
     return [];
   }
 }
