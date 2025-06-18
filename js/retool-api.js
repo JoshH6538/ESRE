@@ -4,75 +4,53 @@ const BASE_URL = debug
   ? "http://localhost:3000/api/realtors"
   : "https://v3tnqbn900.execute-api.us-east-1.amazonaws.com";
 
-export async function findRealtorById(id) {
-  try {
-    console.log("Fetching realtor by ID:", id);
-    const response = await fetch(BASE_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: "findRealtor",
-        userId: id,
-      }),
-    });
-
-    const data = await response.json();
-    return data;
-  } catch (err) {
-    console.error("Error fetching realtor by ID:", err);
-    return null;
+async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, options);
+      if (!response.ok) throw new Error(`Status ${response.status}`);
+      const data = await response.json();
+      if (!Array.isArray(data)) throw new Error("Expected array");
+      return data;
+    } catch (err) {
+      console.warn(`Attempt ${attempt} failed:`, err.message);
+      if (attempt < retries) await new Promise((res) => setTimeout(res, delay));
+    }
   }
+  return []; // fallback if all retries fail
+}
+
+export async function findRealtorById(id) {
+  console.log("Fetching realtor by ID:", id);
+  return await fetchWithRetry(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      type: "findRealtor",
+      userId: id,
+    }),
+  });
 }
 
 export async function allRealtors() {
-  try {
-    const response = await fetch(BASE_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: "allRealtors",
-      }),
-    });
-
-    if (!response.ok) {
-      console.error("API returned error status:", response.status);
-      return []; // prevent storing error
-    }
-
-    const data = await response.json();
-    return Array.isArray(data) ? data : [];
-  } catch (err) {
-    console.error("Error fetching all realtors:", err);
-    return [];
-  }
+  return await fetchWithRetry(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ type: "allRealtors" }),
+  });
 }
 
 export async function allBranches() {
   console.log("allBranches called");
-  try {
-    const response = await fetch(BASE_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: "allBranches",
-      }),
-    });
-
-    if (!response.ok) {
-      console.error("API returned error status:", response.status);
-      return [];
-    }
-
-    const data = await response.json();
-    return Array.isArray(data) ? data : [];
-  } catch (err) {
-    console.error("Error fetching all branches:", err);
-    return [];
-  }
+  return await fetchWithRetry(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ type: "allBranches" }),
+  });
 }

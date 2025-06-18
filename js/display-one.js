@@ -57,99 +57,88 @@ async function renderUser(user) {
   if (!branches || branches.size === 0) {
     console.warn("No branches found or API call failed.");
   }
+
   const container = document.getElementById("userContainer");
-  container.innerHTML = ""; // Clear existing content
+  container.innerHTML = "";
+
   if (!user || Object.keys(user).length === 0) {
     container.innerHTML = "<p>No user data found.</p>";
     return;
   }
 
+  const fullName = `${user["firstName"] ?? ""} ${
+    user["lastName"] ?? ""
+  }`.trim();
+  const title = (user["title"] ?? []).join(" / ") || "Agent";
+  const branchName = branches.get(user["branchId"])?.name ?? "N/A";
+
+  const fields = [
+    { label: "DRE #", value: user["dre"] },
+    { label: "Branch", value: branchName },
+    { label: "Phone", value: user["primaryPhone"] },
+    { label: "Email", value: user["primaryEmail"] },
+    { label: "Secondary Phone", value: user["secondaryPhone"] },
+    { label: "Secondary Email", value: user["secondaryEmail"] },
+    { label: "NMLS ID", value: user["nlms"] },
+  ];
+
+  const fieldHtml = fields
+    .filter(({ value }) => value && value.toString().trim() !== "")
+    .map(
+      ({ label, value }) => `
+        <div class="d-flex mb-2">
+          <strong class="me-2">${label}:</strong> <span>${value}</span>
+        </div>`
+    )
+    .join("");
+
   container.innerHTML = `
-      <h4>${user["firstName"] ?? ""} ${user["lastName"] ?? ""}</h4>
-      <div class="designation fs-16">${
-        (user["title"] ?? []).join(" / ") || "Agent"
-      }</div>
-      <div class="table-responsive">
-        <table class="table">
-          <tbody>
-            <tr>
-              <td>DRE #:</td>
-              <td>${user["dre"] ?? "N/A"}</td>
-            </tr>
-            <tr>
-              <td>Branch:</td>
-              <td>${branches.get(user["branchId"])?.name ?? "N/A"}</td>
-            </tr>
-            <tr>
-              <td>Phone:</td>
-              <td>${user["primaryPhone"] ?? "N/A"}</td>
-            </tr>
-            <tr>
-              <td>Email:</td>
-              <td>${user["primaryEmail"] ?? "N/A"}</td>
-            </tr>
-            <tr>
-              <td>Secondary Phone:</td>
-              <td>${user["secondaryPhone"] ?? "N/A"}</td>
-            </tr>
-            <tr>
-              <td>Secondary Email:</td>
-              <td>${user["secondaryEmail"] ?? "N/A"}</td>
-            </tr>
-            <tr>
-              <td>NMLS ID:</td>
-              <td>${user["nlms"] ?? "N/A"}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    
-      <ul class="style-none d-flex align-items-center social-icon">
-        <li>
-          <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
-        </li>
-        <li>
-          <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-        </li>
-        <li>
-          <a href="#"><i class="fa-brands fa-instagram"></i></a>
-        </li>
-        <li>
-          <a href="#"><i class="fa-brands fa-viber"></i></a>
-        </li>
-      </ul>
-    `;
+    <h4>${fullName}</h4>
+    <div class="designation fs-16">${title}</div>
+    <div>${fieldHtml}</div>
+    <ul class="style-none d-flex align-items-center social-icon mt-3">
+      <li><a href="#"><i class="fa-brands fa-whatsapp"></i></a></li>
+      <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
+      <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+      <li><a href="#"><i class="fa-brands fa-viber"></i></a></li>
+    </ul>
+  `;
 
-  const realtorBreadCrumb = document.getElementById("breadcrumbRealtorName");
-  if (realtorBreadCrumb) {
-    realtorBreadCrumb.innerHTML = `${user["firstName"] ?? ""} ${
-      user["lastName"] ?? ""
-    }`;
-  }
-  const realtorImageWrapper = document.getElementById("realtorImageWrapper");
-
-  const iconURL =
-    user.iconURL && user.iconURL.trim() !== ""
-      ? user.iconURL
-      : "images/lazy.svg";
-  if (!user.iconURL || user.iconURL.trim() == "") {
-    realtorImageWrapper.classList.add("bg-dark");
-  } else {
-    realtorImageWrapper.classList.remove("bg-dark");
-    realtorImageWrapper.classList.add("bg-white");
+  if (user["posURL"]?.trim()) {
+    const button = document.createElement("button");
+    button.className = "btn-nine text-uppercase w-100 mb-20";
+    button.textContent = "Apply Now";
+    button.onclick = () => window.open(user["posURL"], "_blank");
+    container.appendChild(button);
   }
 
-  const branchName = branches.get(user.branchId)?.name ?? "Unknown Branch";
+  const breadcrumb = document.getElementById("breadcrumbRealtorName");
+  if (breadcrumb) breadcrumb.innerText = fullName;
 
-  // Set the background image dynamically
-  realtorImageWrapper.style.backgroundImage = `url(${iconURL})`;
+  const wrapper = document.getElementById("realtorImageWrapper");
+  const iconURL = user.iconURL?.trim() || "images/lazy.svg";
 
-  // Optional: add a dynamic branch tag inside
-  realtorImageWrapper.innerHTML = `
-  <div class="tag bg-white position-absolute text-uppercase" style="top: 10px; left: 10px;">
-    ${branchName}
-  </div>
-`;
+  wrapper.classList.toggle("bg-dark", !user.iconURL?.trim());
+  wrapper.classList.toggle("bg-white", !!user.iconURL?.trim());
+  wrapper.style.backgroundImage = `url(${iconURL})`;
+
+  wrapper.innerHTML = `
+    <div class="tag bg-white position-absolute text-uppercase" style="top: 10px; left: 10px;">
+      ${branchName}
+    </div>
+  `;
+
+  const bioContainer = document.getElementById("realtorBio");
+  if (bioContainer && user["bio"]?.trim()) {
+    bioContainer.innerHTML = user["bio"];
+  }
+
+  const contactForm = document.getElementById("contactForm");
+  let a = document.createElement("a");
+  a.className = "btn-eight sm text-uppercase w-100 rounded-0 tran3s";
+  a.href = `tel:${user.primaryPhone}`;
+  a.textContent = "CALL NOW";
+  contactForm.appendChild(a);
 }
 
 window.addEventListener("DOMContentLoaded", async () => {

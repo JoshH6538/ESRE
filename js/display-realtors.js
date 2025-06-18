@@ -39,6 +39,7 @@ function renderRealtors(realtorArray) {
   container.innerHTML = "";
 
   for (const realtor of realtorArray) {
+    if (realtor && realtor.lastName === "Chu") console.log("Realtor:", realtor);
     const iconURL =
       realtor.iconURL && realtor.iconURL.trim() !== ""
         ? realtor.iconURL
@@ -99,8 +100,24 @@ document.getElementById("realtorSearchForm").addEventListener("submit", (e) => {
     const branchName = (
       branchMap.get(realtor.branchId)?.name ?? ""
     ).toLowerCase();
+
+    const zipcode = (realtor.zipcode ?? "").toLowerCase();
+    const zipcode2 = (realtor.zipcode2 ?? "").toLowerCase();
+    const branchZipcode = (
+      branchMap.get(realtor.branchId)?.address?.zipcode ?? ""
+    ).toLowerCase();
+    const branchCity = (
+      branchMap.get(realtor.branchId)?.address?.city ?? ""
+    ).toLowerCase();
+
     return (
-      name.includes(query) || dre.includes(query) || branchName.includes(query)
+      name.includes(query) ||
+      dre.includes(query) ||
+      branchName.includes(query) ||
+      zipcode.includes(query) ||
+      zipcode2.includes(query) ||
+      branchZipcode.includes(query) ||
+      branchCity.includes(query)
     );
   });
 
