@@ -98,19 +98,18 @@ async function renderUser(user) {
   container.innerHTML = `
     <h4>${fullName}</h4>
     <div class="designation fs-16">${title}</div>
-    <div>${fieldHtml}</div>
-    <ul class="style-none d-flex align-items-center social-icon mt-3">
-      <li><a href="#"><i class="fa-brands fa-whatsapp"></i></a></li>
-      <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
-      <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
-      <li><a href="#"><i class="fa-brands fa-viber"></i></a></li>
-    </ul>
-  `;
+    <div>${fieldHtml}</div>`;
+  // <ul class="style-none d-flex align-items-center social-icon mt-3">
+  //   <li><a href="#"><i class="fa-brands fa-whatsapp"></i></a></li>
+  //   <li><a href="#"><i class="fa-brands fa-x-twitter"></i></a></li>
+  //   <li><a href="#"><i class="fa-brands fa-instagram"></i></a></li>
+  //   <li><a href="#"><i class="fa-brands fa-viber"></i></a></li>
+  // </ul>
 
   // SECTION: Add "Apply Now" button if POS URL exists
   if (user["posURL"]?.trim()) {
     const button = document.createElement("button");
-    button.className = "btn-nine text-uppercase w-100 mb-20";
+    button.className = "btn-nine text-uppercase w-100 mb-20 mt-10";
     button.textContent = "Apply Now";
     button.onclick = () => window.open(user["posURL"], "_blank");
     container.appendChild(button);
