@@ -53,13 +53,14 @@ async function loadUserCached(userId) {
 }
 
 async function renderUser(user) {
+  // SECTION: Prepare data
   const branches = arrayToMap(await getBranches(), "branchId");
   if (!branches || branches.size === 0) {
     console.warn("No branches found or API call failed.");
   }
 
   const container = document.getElementById("userContainer");
-  container.innerHTML = "";
+  container.innerHTML = ""; // Clear out previous content
 
   if (!user || Object.keys(user).length === 0) {
     container.innerHTML = "<p>No user data found.</p>";
@@ -72,6 +73,7 @@ async function renderUser(user) {
   const title = (user["title"] ?? []).join(" / ") || "Agent";
   const branchName = branches.get(user["branchId"])?.name ?? "N/A";
 
+  // SECTION: Build basic info field display
   const fields = [
     { label: "DRE #", value: user["dre"] },
     { label: "Branch", value: branchName },
@@ -92,6 +94,7 @@ async function renderUser(user) {
     )
     .join("");
 
+  // SECTION: Render user info into container
   container.innerHTML = `
     <h4>${fullName}</h4>
     <div class="designation fs-16">${title}</div>
@@ -104,6 +107,7 @@ async function renderUser(user) {
     </ul>
   `;
 
+  // SECTION: Add "Apply Now" button if POS URL exists
   if (user["posURL"]?.trim()) {
     const button = document.createElement("button");
     button.className = "btn-nine text-uppercase w-100 mb-20";
@@ -112,9 +116,13 @@ async function renderUser(user) {
     container.appendChild(button);
   }
 
+  // SECTION: Update breadcrumb name
   const breadcrumb = document.getElementById("breadcrumbRealtorName");
-  if (breadcrumb) breadcrumb.innerText = fullName;
+  if (breadcrumb) {
+    breadcrumb.innerText = fullName;
+  }
 
+  // SECTION: Update image wrapper with profile photo and tag
   const wrapper = document.getElementById("realtorImageWrapper");
   const iconURL = user.iconURL?.trim() || "images/lazy.svg";
 
@@ -128,19 +136,88 @@ async function renderUser(user) {
     </div>
   `;
 
+  // SECTION: Set bio if available
   const bioContainer = document.getElementById("realtorBio");
   if (bioContainer && user["bio"]?.trim()) {
     bioContainer.innerHTML = user["bio"];
   }
 
-  const contactForm = document.getElementById("contactForm");
-  let a = document.createElement("a");
-  a.className = "btn-eight sm text-uppercase w-100 rounded-0 tran3s";
-  a.href = `tel:${user.primaryPhone}`;
-  a.textContent = "CALL NOW";
-  contactForm.appendChild(a);
-}
+  // SECTION: Add custom "INQUIRY" mail button that CCs another address
+  let contactForm = document.getElementById("contactForm");
+  const emailToUse =
+    user.primaryEmail?.trim() ||
+    user.secondaryEmail?.trim() ||
+    user.externalEmail?.trim() ||
+    null;
 
+  if (emailToUse) {
+    const inquiry = document.createElement("button");
+    inquiry.className = "btn-nine text-uppercase w-100 mb-20";
+    inquiry.textContent = "INQUIRE";
+    inquiry.type = "submit"; // Prevent default form behavior
+
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault(); // Stop actual form submission
+
+      const form = e.target;
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      const message = form.message.value.trim();
+
+      if (!email || !phone || !message) {
+        alert("Please fill out all required fields.");
+        return;
+      }
+
+      // Choose which user email to use
+      const emailToUse =
+        user.primaryEmail?.trim() ||
+        user.secondaryEmail?.trim() ||
+        user.externalEmail?.trim() ||
+        null;
+
+      if (!emailToUse) {
+        alert("No email address available to send inquiry.");
+        return;
+      }
+
+      const ccEmail = "ithelp@equitysmartloans.com";
+      const subject = `Inquiry for ${user.firstName} ${user.lastName}`;
+      const body = `Hello ${user.firstName},\n\n${message}\n\nPhone: ${phone}\nEmail: ${email}\n\nBest regards,`;
+
+      const mailtoURL = `mailto:${emailToUse}?cc=${encodeURIComponent(
+        ccEmail
+      )}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(
+        body
+      )}`;
+
+      console.log("Submitting inquiry via mailto:", mailtoURL);
+      window.location.href = mailtoURL;
+    });
+
+    contactForm.appendChild(inquiry);
+  } else {
+    contactForm.innerHTML = "";
+  }
+  // SECTION: Add custom "CALL NOW" phone button
+  const phoneToUse =
+    user.primaryPhone?.trim() || user.secondaryPhone?.trim() || null;
+  if (phoneToUse) {
+    const callButton = document.createElement("button");
+    callButton.className = "btn-nine text-uppercase w-100 mb-20";
+    callButton.textContent = "CALL NOW";
+    callButton.type = "button";
+
+    callButton.onclick = () => {
+      const phone = user.primaryPhone.replace(/\D/g, ""); // strip non-digits
+      const telURL = `tel:${phone}`;
+      console.log("CALL NOW button clicked:", telURL);
+      window.location.href = telURL;
+    };
+
+    contactForm.appendChild(callButton);
+  }
+}
 window.addEventListener("DOMContentLoaded", async () => {
   await getUserData(); // If this populates userCache
   await getBranches(); // Loads branchCache

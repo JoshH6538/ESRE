@@ -841,7 +841,7 @@
               <div class="theme-sidebar-one dot-bg p-30 ms-xxl-3 md-mt-60">
                 <div class="tour-schedule bg-white p-30 mb-40">
                   <h5 class="mb-40">Contact Form</h5>
-                  <form action="#" id="contactForm">
+                  <form id="contactForm">
                     <div class="input-box-three mb-25">
                       <div class="label">Your Email*</div>
                       <input
@@ -849,6 +849,7 @@
                         placeholder="Enter mail address"
                         class="type-input rounded-0"
                         required
+                        name="email"
                       />
                     </div>
                     <!-- /.input-box-three -->
@@ -859,6 +860,7 @@
                         placeholder="Your phone number"
                         class="type-input rounded-0"
                         required
+                        name="phone"
                       />
                     </div>
                     <!-- /.input-box-three -->
@@ -868,12 +870,10 @@
                         placeholder="Hello, I am interested in [Califronia Apartments]"
                         class="rounded-0"
                         required
+                        name="message"
                       ></textarea>
                     </div>
                     <!-- /.input-box-three -->
-                    <button class="btn-nine text-uppercase w-100 mb-20">
-                      INQUIry
-                    </button>
                   </form>
                 </div>
                 <!-- /.tour-schedule -->
