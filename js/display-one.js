@@ -2,35 +2,19 @@ import { findRealtorById } from "./retool-api.js";
 import { getBranches, arrayToMap } from "./branch-data.js";
 import { getUserData } from "./user-data.js";
 
+// Grab the userId from the URL query parameters
 const userId = new URLSearchParams(window.location.search).get("userId");
-// var retryCount = 0;
-// async function loadUser(userId) {
-//   console.log("Loading user...");
-//   var user = await findRealtorById(userId);
-//   if (!user || user.length === 0 || user["message"]) {
-//     console.warn("No realtor found or API call failed.");
-//     console.log("retryCount:", retryCount);
-//     if (retryCount < 3) {
-//       // Limit retries to avoid infinite loop
-//       setTimeout(() => {
-//         retryCount++;
-//       }, 5000);
-//       loadUser(user);
-//     } // Retry after 5 seconds
-//   }
-//   renderUser(user);
-//   // console.log("User data loaded:", user);
-// }
 
+// Grab the user from all users cached in localStorage
 async function loadUserCached(userId) {
   console.log("Loading user from cache...");
-
+  // SECTION: Check if userId is valid
   const raw = localStorage.getItem("userCache");
   if (!raw) {
     console.warn("No userCache found.");
     return;
   }
-
+  // SECTION: Parse the userCache
   let userList;
   try {
     userList = JSON.parse(raw); // Expecting an array
@@ -51,22 +35,23 @@ async function loadUserCached(userId) {
 
   renderUser(user);
 }
-
+// SECTION: Populate page with user data
 async function renderUser(user) {
   // SECTION: Prepare data
-  const branches = arrayToMap(await getBranches(), "branchId");
+  const branchArray = await getBranches();
+  const branches = arrayToMap(branchArray, "branchId");
   if (!branches || branches.size === 0) {
     console.warn("No branches found or API call failed.");
   }
-
+  // SECTION: Get container and clear previous content
   const container = document.getElementById("userContainer");
   container.innerHTML = ""; // Clear out previous content
-
+  // SECTION: Check if user data is valid
   if (!user || Object.keys(user).length === 0) {
     container.innerHTML = "<p>No user data found.</p>";
     return;
   }
-
+  // SECTION: Define user properties
   const fullName = `${user["firstName"] ?? ""} ${
     user["lastName"] ?? ""
   }`.trim();
@@ -83,7 +68,7 @@ async function renderUser(user) {
     { label: "Secondary Email", value: user["secondaryEmail"] },
     { label: "NMLS ID", value: user["nlms"] },
   ];
-
+  // Populate fields with fields array
   const fieldHtml = fields
     .filter(({ value }) => value && value.toString().trim() !== "")
     .map(
@@ -216,7 +201,29 @@ async function renderUser(user) {
 
     contactForm.appendChild(callButton);
   }
+  // SECTION: Search Agent Form
+  const branchSelect = document.getElementById("branchSelect");
+  console.log("Branch select element:", branchSelect);
+  if (branchSelect && branchSelect.childElementCount < 2) {
+    branchSelect.innerHTML = ""; // Clear previous options
+    console.log("Cleared branch select options", branchSelect);
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "All Branches";
+    branchSelect.appendChild(defaultOption);
+
+    branches.forEach((branch) => {
+      const option = document.createElement("option");
+      option.value = branch.branchId;
+      option.textContent = branch.name;
+      branchSelect.appendChild(option);
+    });
+
+    branchSelect.value = user.branchId || ""; // Set to user's branch or default
+  }
 }
+
+// SECTION: Initialize the page
 window.addEventListener("DOMContentLoaded", async () => {
   await getUserData(); // If this populates userCache
   await getBranches(); // Loads branchCache

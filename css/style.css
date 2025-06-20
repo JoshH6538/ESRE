@@ -16535,11 +16535,6 @@ body {
   box-shadow: none;
 }
 
-#navbarNav2 > ul > li.nav-item > a {
-  font-size: larger;
-  color: #000;
-}
-
 #contact-header {
   background-color: #012a3a;
 }
@@ -16585,6 +16580,10 @@ body {
 
 .breadcrumb-enhanced a:hover {
   opacity: 0.8;
+}
+
+.filterButton {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */

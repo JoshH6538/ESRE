@@ -150,21 +150,20 @@
                       </div>
                     </li>
                     <!-- HOME LINK -->
+                    <li class="nav-item me-5">
+                      <a class="nav-link" href="./">Home</a>
+                    </li>
+                    <!-- REALTORS LINK -->
                     <li
                       class="nav-item active-menu me-5"
                       style="white-space: nowrap"
                     >
-                      <a class="nav-link" href="./">Home</a>
-                    </li>
-                    <!-- REALTORS LINK -->
-                    <li class="nav-item me-5">
                       <a class="nav-link" href="realtors.html">Realtors</a>
                     </li>
                     <!-- LISTINGS DROPDOWN -->
                     <li class="nav-item dropdown me-5">
                       <a
                         class="nav-link dropdown-toggle"
-                        href="#"
                         role="button"
                         data-bs-toggle="dropdown"
                         data-bs-auto-close="outside"
@@ -275,9 +274,29 @@
               Showing
               <span class="color-dark fw-500" id="total">0</span> results
             </div>
-            <div class="d-flex align-items-center xs-mt-20">
+            <div
+              class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-2"
+            >
               <div class="short-filter d-flex align-items-center">
-                <div class="fs-16 me-2">Sort</div>
+                <!-- Filter Settings -->
+                <a
+                  data-bs-toggle="modal"
+                  data-bs-target="#advanceFilterModal"
+                  class="search-modal-btn tran3s text-uppercase fw-500 d-inline-flex align-items-center me-5 filterButton"
+                >
+                  <span class="me-2">Filter</span>
+                  <i class="fa-light fa-sliders-up"></i>
+                </a>
+
+                <a
+                  class="tran3s text-uppercase fw-500 d-none d-inline-flex align-items-center me-5 px-3 py-2 filterButton"
+                  id="clearFiltersBtn"
+                >
+                  <span class="me-2">Clear</span>
+                  <i class="fa-light fa-x"></i>
+                </a>
+
+                <div class="fs-16 me-3 text-uppercase fw-500">Sort</div>
                 <select class="form-select rounded-0" id="sortSelect">
                   <option value="firstName-asc">First Name (A–Z)</option>
                   <option value="firstName-desc">First Name (Z–A)</option>
@@ -428,6 +447,120 @@
           <button class="scroll-top">
             <i class="bi bi-arrow-up-short"></i>
           </button>
+          <!-- ################### Advanced Filter Modal ####################### -->
+          <div
+            class="modal fade"
+            id="advanceFilterModal"
+            tabindex="-1"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="container">
+                <div class="row">
+                  <div class="col-xl-8 m-auto">
+                    <div class="modal-content">
+                      <button
+                        type="button"
+                        class="btn-close ms-auto mt-20 me-4"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <i class="fa-regular fa-xmark"></i>
+                      </button>
+                      <div class="advance-search-panel">
+                        <div class="main-bg border-0">
+                          <form id="realtorFitlerForm">
+                            <div class="row gx-lg-5">
+                              <!-- Basic Filters -->
+                              <div class="col-md-6">
+                                <div class="input-box-one mb-35">
+                                  <div class="label">Title</div>
+                                  <select class="nice-select fw-normal">
+                                    <option value="(none)" selected>
+                                      All Titles
+                                    </option>
+                                    <option>BM</option>
+                                    <option>CEO</option>
+                                    <option>DFPI</option>
+                                    <option>DRE</option>
+                                    <option>LO</option>
+                                    <option>LOA</option>
+                                    <option>Marketing Director</option>
+                                    <option>Melinda's Assistant</option>
+                                    <option>Offboarded</option>
+                                    <option>Processor</option>
+                                    <option>RE</option>
+                                    <option>
+                                      RE (Not Authorized to represent us)
+                                    </option>
+                                    <option>Social Media</option>
+                                  </select>
+                                </div>
+                              </div>
+
+                              <!-- Text Inputs -->
+                              <div class="col-md-6">
+                                <div class="input-box-one mb-35">
+                                  <div class="label">Zipcode</div>
+                                  <input
+                                    type="text"
+                                    placeholder="Enter 5 digit zipcode"
+                                    class="type-input"
+                                    pattern="[0-9]{5}"
+                                    data-error="Invalid Zipcode"
+                                  />
+                                </div>
+                              </div>
+
+                              <!-- Branches -->
+                              <div class="col-12">
+                                <h6 class="block-title fw-bold mb-30">
+                                  Branches
+                                </h6>
+                                <ul
+                                  class="style-none d-flex flex-wrap justify-content-between filter-input"
+                                  id="branchFilter"
+                                >
+                                  <li>
+                                    <input type="checkbox" value="" /><label
+                                      >Loading...</label
+                                    >
+                                  </li>
+                                </ul>
+                              </div>
+
+                              <!-- Actions -->
+                              <div class="col-12 mt-2">
+                                <div
+                                  class="d-flex justify-content-between form-widget"
+                                >
+                                  <a class="tran3s" id="resetFilterBtn"
+                                    ><i class="fa-regular fa-arrows-rotate"></i
+                                    ><span>Reset Filter</span></a
+                                  >
+                                </div>
+                              </div>
+                              <div class="col-12">
+                                <button
+                                  class="fw-500 text-uppercase tran3s apply-search w-100 rounded-0 mt-40 mb-25"
+                                >
+                                  <i class="fa-light fa-magnifying-glass"></i>
+                                  <span>Search</span>
+                                </button>
+                              </div>
+                            </div>
+                          </form>
+                        </div>
+                        <!-- /.main-bg -->
+                      </div>
+                      <!-- /.advance-search-panel -->
+                    </div>
+                    <!-- /.modal-content -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
           <!-- Optional JavaScript _____________________________  -->
 

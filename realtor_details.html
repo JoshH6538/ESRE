@@ -54,6 +54,7 @@
       href="css/responsive.css"
       media="all"
     />
+    <script src="js/display-one.js" type="module"></script>
 
     <!-- Fix Internet Explorer ______________________________________-->
     <!--[if lt IE 9]>
@@ -150,14 +151,14 @@
                       </div>
                     </li>
                     <!-- HOME LINK -->
+                    <li class="nav-item me-5">
+                      <a class="nav-link" href="./">Home</a>
+                    </li>
+                    <!-- REALTORS LINK -->
                     <li
                       class="nav-item active-menu me-5"
                       style="white-space: nowrap"
                     >
-                      <a class="nav-link" href="./">Home</a>
-                    </li>
-                    <!-- REALTORS LINK -->
-                    <li class="nav-item me-5">
                       <a class="nav-link" href="realtors.html">Realtors</a>
                     </li>
                     <!-- LISTINGS DROPDOWN -->
@@ -575,7 +576,7 @@
                       <div class="label">Your Phone*</div>
                       <input
                         type="tel"
-                        placeholder="Your phone number"
+                        placeholder="Enter phone number"
                         class="type-input rounded-0"
                         required
                         name="phone"
@@ -585,7 +586,7 @@
                     <div class="input-box-three mb-15">
                       <div class="label">Message*</div>
                       <textarea
-                        placeholder="Hello, I am interested in [Califronia Apartments]"
+                        placeholder="Enter your message here"
                         class="rounded-0"
                         required
                         name="message"
@@ -596,45 +597,6 @@
                 </div>
                 <!-- /.tour-schedule -->
 
-                <div class="agent-finder bg-white p-30 mb-40">
-                  <h5 class="mb-40">Search Agent</h5>
-                  <form action="#">
-                    <div class="input-box-one mb-25">
-                      <div class="label">Agent Name</div>
-                      <input
-                        type="text"
-                        placeholder="Type Agent Name"
-                        class="type-input"
-                      />
-                    </div>
-                    <!-- /.input-box-one -->
-                    <div class="input-box-one mb-25">
-                      <div class="label">Keyword</div>
-                      <input
-                        type="text"
-                        placeholder="Apartments, Villa"
-                        class="type-input"
-                      />
-                    </div>
-                    <!-- /.input-box-one -->
-                    <div class="input-box-one mb-25">
-                      <div class="label">Location</div>
-                      <select class="nice-select fw-normal">
-                        <option value="1">Dhanmondi, Dhaka</option>
-                        <option value="2">Acapulco, Mexico</option>
-                        <option value="3">Berlin, Germany</option>
-                        <option value="4">Cannes, France</option>
-                        <option value="5">Delhi, India</option>
-                        <option value="6">Giza, Egypt</option>
-                        <option value="7">Havana, Cuba</option>
-                      </select>
-                    </div>
-                    <!-- /.input-box-one -->
-                    <button class="btn-nine text-uppercase w-100 mb-10">
-                      SEARCH
-                    </button>
-                  </form>
-                </div>
                 <!-- /.agent-finder -->
               </div>
               <!-- /.theme-sidebar-one -->
@@ -789,7 +751,6 @@
 
       <!-- Theme js -->
       <script src="js/theme.js"></script>
-      <script src="js/display-one.js" type="module"></script>
     </div>
     <!-- /.main-page-wrapper -->
   </body>

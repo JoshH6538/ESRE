@@ -369,45 +369,38 @@
 			Theme Main Menu
 		============================================== 
 		-->
-      <header class="theme-main-menu menu-overlay menu-style-three sticky-menu">
+      <header
+        class="theme-main-menu menu-overlay menu-style-seven white-vr sticky-menu"
+        id="contact-header"
+      >
         <div class="inner-content gap-one">
           <div class="top-header position-relative">
-            <div class="d-flex align-items-center">
+            <div class="d-flex align-items-center justify-content-between">
+              <!-- ES NAV LOGO -->
               <div class="logo order-lg-0">
                 <a href="/" class="d-flex align-items-center logo-link">
                   <img
                     loading="lazy"
-                    src="images/es/ESHL-RES-LOGO.png"
+                    src="images/es/ESHL-RES-LOGO-WHITE.png"
                     alt="Logo"
                     height="50"
                     class="logo-img"
                   />
                 </a>
               </div>
-              <!-- logo -->
-              <div class="right-widget ms-auto me-3 me-lg-0 order-lg-3">
-                <ul class="d-flex align-items-center style-none">
+              <!-- CONTACT US BUTTON -->
+              <div class="right-widget ms-auto ms-lg-0 me-3 me-lg-0 order-lg-3">
+                <ul class="d-none d-md-flex align-items-center style-none">
                   <li>
-                    <a href="" class="btn-one black-vr"
+                    <a href="contact.html" class="btn-one white-vr"
                       ><i class="fa-regular fa-comment"></i>
                       <span>Contact Us</span></a
                     >
                   </li>
-
-                  <li class="d-none d-xl-block">
-                    <button
-                      class="sidenavbtn rounded-circle tran3s ms-5"
-                      type="button"
-                      data-bs-toggle="offcanvas"
-                      data-bs-target="#sideNav"
-                      aria-controls="sideNav"
-                    >
-                      <i class="fa-sharp fa-light fa-bars-filter"></i>
-                    </button>
-                  </li>
                 </ul>
               </div>
-              <nav class="navbar navbar-expand-lg p0 ms-lg-5 order-lg-2">
+              <!-- NAVBAR -->
+              <nav class="navbar navbar-expand-lg p0 order-lg-2">
                 <button
                   class="navbar-toggler d-block d-lg-none"
                   type="button"
@@ -419,22 +412,21 @@
                 >
                   <span></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav2">
+                <div class="collapse navbar-collapse px-4" id="navbarNav">
                   <ul class="navbar-nav align-items-lg-center">
-                    <!-- LOGO -->
+                    <!-- MOBILE ES LOGO -->
                     <li class="d-block d-lg-none">
                       <div class="logo">
                         <a href="/" class="d-block"
-                          ><img src="images/logo/logo_04.svg" alt=""
+                          ><img
+                            loading="lazy"
+                            src="images/es/ESHL-RES-LOGO-WHITE.png"
+                            alt=""
                         /></a>
                       </div>
                     </li>
-
                     <!-- HOME LINK -->
-                    <li
-                      class="nav-item active-menu me-5"
-                      style="white-space: nowrap"
-                    >
+                    <li class="nav-item me-5">
                       <a class="nav-link" href="./">Home</a>
                     </li>
                     <!-- REALTORS LINK -->
@@ -466,16 +458,17 @@
                       </ul>
                     </li>
                     <!-- ABOUT LINK -->
-                    <li class="nav-item me-5">
+                    <li
+                      class="nav-item active-menu me-5"
+                      style="white-space: nowrap"
+                    >
                       <a class="nav-link" href="about.html">About</a>
                     </li>
+                    <!-- CONTACT US BUTTON -->
                     <li class="d-md-none ps-2 pe-2 mt-20">
-                      <a
-                        href="dashboard/add-property.html"
-                        class="btn-ten w-100"
-                        target="_blank"
-                        ><span>Add Listing</span>
-                        <i class="bi bi-arrow-up-right"></i
+                      <a href="404.html" class="btn-two w-100" target="_blank"
+                        ><span>Contact Us</span>
+                        <i class="fa-regular fa-comment"></i
                       ></a>
                     </li>
                   </ul>

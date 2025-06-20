@@ -63,11 +63,6 @@ body {
   box-shadow: none;
 }
 
-#navbarNav2 > ul > li.nav-item > a {
-  font-size: larger;
-  color: $text-dark;
-}
-
 // #header2 {
 //   &.fixed {
 //     background-color: $color-one;
@@ -120,4 +115,8 @@ body {
 
 .breadcrumb-enhanced a:hover {
   opacity: 0.8;
+}
+
+.filterButton {
+  cursor: pointer;
 }

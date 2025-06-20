@@ -19,7 +19,12 @@ async function loadRealtors() {
     console.warn("No realtor data in localStorage");
     return;
   }
-
+  // Sort the realtors by last name
+  allRealtorsData.sort((a, b) => {
+    const lastNameA = (a.lastName ?? "").toLowerCase();
+    const lastNameB = (b.lastName ?? "").toLowerCase();
+    return lastNameA.localeCompare(lastNameB);
+  });
   renderRealtors(allRealtorsData);
   updateResultsCount(allRealtorsData.length);
 }
@@ -38,8 +43,17 @@ function renderRealtors(realtorArray) {
   const container = document.getElementById("realtorContainer");
   container.innerHTML = "";
 
+  if (realtorArray.length === 0) {
+    console.warn("[Render] No realtors found");
+    container.innerHTML = `
+      <div class="text-center py-5">
+        <p class="fs-4 text-muted">No realtors found matching your criteria.</p>
+      </div>
+    `;
+    return;
+  }
+
   for (const realtor of realtorArray) {
-    if (realtor && realtor.lastName === "Chu") console.log("Realtor:", realtor);
     const iconURL =
       realtor.iconURL && realtor.iconURL.trim() !== ""
         ? realtor.iconURL
@@ -76,7 +90,169 @@ function renderRealtors(realtorArray) {
 
     container.appendChild(col);
   }
+  // SECTION: FIlter Modal
+  const branchFilter = document.getElementById("branchFilter");
+  if (branchFilter) {
+    branchFilter.innerHTML = ""; // Clear existing content
+    // Sort branches by name
+    const sortedBranches = Array.from(branchMap.values()).sort((a, b) =>
+      a.name.localeCompare(b.name)
+    );
+    sortedBranches.forEach((branch) => {
+      const li = document.createElement("li");
+      li.innerHTML = `
+        <input type="checkbox" value="${branch.branchId}" />
+        <label>${branch.name}</label>
+      `;
+      branchFilter.appendChild(li);
+    });
+  }
 }
+//  SECTION: Filter Submit
+document
+  .getElementById("realtorFitlerForm")
+  .addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+
+    // Get Title
+    const title = form.querySelector("select")?.value?.trim();
+
+    // Get Zipcode
+    const zipcode = form.querySelector('input[type="text"]')?.value?.trim();
+
+    // Get Checked Branches
+
+    const selectedBranchIds = Array.from(
+      form.querySelectorAll("#branchFilter input[type='checkbox']:checked")
+    ).map((cb) => cb.value);
+
+    // === Start with full list ===
+    let filtered = allRealtorsData.slice();
+
+    // === Title filter ===
+    if (title !== "(none)") {
+      filtered = filtered.filter((realtor) => {
+        return title != "" && realtor.title.includes(title);
+      });
+    }
+
+    // === Zipcode filter ===
+    if (zipcode !== "(none)") {
+      filtered = filtered.filter((realtor) => {
+        const match = (realtor.zipcode ?? "").startsWith(zipcode);
+        return match;
+      });
+    }
+
+    // === Branch filter ===
+    if (selectedBranchIds.length > 0) {
+      const selectedBranchSet = new Set(selectedBranchIds); // fast lookup
+
+      filtered = filtered.filter((realtor) => {
+        const branchId = realtor.branchId;
+
+        const match = selectedBranchSet.has(branchId);
+
+        return match;
+      });
+    }
+
+    // === Summary ===
+    console.log(
+      `[Filter] Final result count: ${filtered.length} of ${allRealtorsData.length}`
+    );
+
+    // === Sort & Render ===
+    const currentSort = document.getElementById("sortSelect").value;
+    const sortedFiltered = sortRealtors(filtered, currentSort);
+
+    // Close modal
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("advanceFilterModal")
+    );
+    if (modal) {
+      document.activeElement?.blur();
+      modal.hide();
+
+      console.log("[Filter] Modal closed.");
+    }
+
+    const clearBtn = document.getElementById("clearFiltersBtn");
+
+    // Check if any filters were used
+    if (areFiltersActive({ title, zipcode: zipcode, selectedBranchIds })) {
+      clearBtn.classList.remove("d-none");
+      console.log("[UI] Showing Clear Filters button");
+    } else {
+      clearBtn.classList.add("d-none");
+      console.log("[UI] Hiding Clear Filters button");
+    }
+
+    renderRealtors(sortedFiltered);
+    updateResultsCount(sortedFiltered.length);
+  });
+
+// Check if any filters are active
+function areFiltersActive({ title, zipcode, selectedBranchIds }) {
+  return (
+    title !== "(none)" || zipcode !== "(none)" || selectedBranchIds.length > 0
+  );
+}
+// Clear Filters Functionality
+document.getElementById("clearFiltersBtn").addEventListener("click", () => {
+  console.log("[Action] Clear Filters clicked.");
+
+  const form = document.getElementById("realtorFitlerForm");
+
+  // Reset all form inputs
+  form.reset();
+
+  // Manually uncheck any dynamically generated checkboxes
+  form
+    .querySelectorAll('#branchFilter input[type="checkbox"]')
+    .forEach((cb) => (cb.checked = false));
+
+  // Reset nice-select dropdowns if used
+  if (typeof jQuery !== "undefined" && $.fn.niceSelect) {
+    $("select").niceSelect("update");
+  }
+
+  // Hide the button again
+  document.getElementById("clearFiltersBtn").classList.add("d-none");
+
+  // Re-render all realtors
+  renderRealtors(allRealtorsData);
+  updateResultsCount(allRealtorsData.length);
+
+  console.log("[Filter] Cleared filters and restored full list.");
+});
+
+// Reset Filter Functionality
+document
+  .getElementById("resetFilterBtn")
+  .addEventListener("click", function (e) {
+    e.preventDefault(); // prevent jumping to top
+
+    const form = document.getElementById("realtorFitlerForm");
+
+    // 1. Reset all form inputs
+    form.reset();
+
+    // 2. Manually uncheck any dynamically generated checkboxes (e.g., in #branchFilter)
+    const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+    checkboxes.forEach((checkbox) => {
+      checkbox.checked = false;
+    });
+
+    // 3. Reset nice-select dropdowns if you're using that library
+    if (typeof jQuery !== "undefined" && $.fn.niceSelect) {
+      $("select").niceSelect("update"); // refresh the UI
+    }
+
+    console.log("Filters reset");
+  });
 
 // Update results count
 function updateResultsCount(count) {
