@@ -6,7 +6,7 @@
 // Developed by : (me@heloshape.com) / (www.me.heloshape.com)
 
 (function ($) {
-  "use strict";
+  ("use strict");
 
   //-------------- Click event to scroll to top
   $(window).on("scroll", function () {
@@ -16,8 +16,30 @@
       $(".scroll-top").fadeOut();
     }
   });
+  //-------------- Click event to scroll down
+  // Show/hide scroll buttons if needed
+  $(window).on("scroll", function () {
+    if ($(this).scrollTop() > 200) {
+      $(".scroll-top").fadeIn();
+    } else {
+      $(".scroll-top").fadeOut();
+    }
+  });
+
+  // Scroll to top
   $(".scroll-top").on("click", function () {
-    $("html, body").animate({ scrollTop: 0 });
+    $("html, body").animate({ scrollTop: 0 }, 300);
+    return false;
+  });
+
+  // Scroll down by 100vh
+  $(".scroll-down").on("click", function () {
+    $("html, body").animate(
+      {
+        scrollTop: $(window).height(),
+      },
+      300
+    );
     return false;
   });
 

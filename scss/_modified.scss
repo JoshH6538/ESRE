@@ -16,6 +16,10 @@
   font-size: larger;
   color: $text-light;
 }
+#navbarNav > ul > li > a:hover {
+  font-size: larger;
+  color: $color-one;
+}
 
 // .theme-main-menu.menu-overlay {
 //   background-color: red !important;
@@ -70,8 +74,8 @@ body {
 //   }
 // }
 
-#contact-header {
-  background-color: $color-two;
+.contact-header {
+  background-color: white;
 }
 
 .breadcrumb-wrapper {
@@ -119,4 +123,30 @@ body {
 
 .filterButton {
   cursor: pointer;
+}
+
+header.black-text-header #navbarNav > ul > li > a {
+  color: #000;
+}
+header.black-text-header#navbarNav > ul > li > a:hover {
+  color: $color-one;
+}
+header.theme-main-menu.fixed #navbarNav > ul > li > a {
+  color: #ffffff;
+}
+header.theme-main-menu.fixed .right-widget ul li a {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+header.theme-main-menu.fixed .right-widget ul li a:hover {
+  border-color: black;
+}
+@media (max-width: 991.98px) {
+  header.theme-main-menu #navbarNav > ul > li > a {
+    color: #fff !important;
+  }
+
+  header.theme-main-menu.fixed #navbarNav > ul > li > a {
+    color: #fff !important;
+  }
 }

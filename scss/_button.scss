@@ -27,6 +27,16 @@
       border-color: $color-one;
     }
   }
+  &.black-vr {
+    color: #000;
+    border-color: #000;
+    &:hover,
+    &:focus {
+      background: $color-one;
+      border-color: $color-two;
+      color: #fff;
+    }
+  }
 }
 .btn-two {
   display: inline-flex;

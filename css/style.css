@@ -32,7 +32,12 @@ body {
   font-family: "EB Garamond", serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 500;
   color: #000;
 }
@@ -119,7 +124,7 @@ p {
 }
 
 .bg-light {
-  background: #F8F8F8;
+  background: #f8f8f8;
 }
 
 .dark-bg {
@@ -163,7 +168,8 @@ p {
     transform: rotateY(0deg);
   }
 }
-.scroll-top {
+.scroll-top,
+.scroll-down {
   width: 35px;
   height: 35px;
   line-height: 35px;
@@ -179,7 +185,8 @@ p {
   background: #007dab;
   transition: all 0.3s ease-in-out;
 }
-.scroll-top:after {
+.scroll-top:after,
+.scroll-down:after {
   position: absolute;
   z-index: -1;
   content: "";
@@ -1914,6 +1921,15 @@ iframe {
 .btn-one.white-vr:hover, .btn-one.white-vr:focus {
   background: #007dab;
   border-color: #007dab;
+}
+.btn-one.black-vr {
+  color: #000;
+  border-color: #000;
+}
+.btn-one.black-vr:hover, .btn-one.black-vr:focus {
+  background: #007dab;
+  border-color: #012a3a;
+  color: #fff;
 }
 
 .btn-two {
@@ -16498,6 +16514,11 @@ html.with-fancybox body.hide-scrollbar {
   color: #ffffff;
 }
 
+#navbarNav > ul > li > a:hover {
+  font-size: larger;
+  color: #007dab;
+}
+
 .feedback-section-six {
   background-color: #d8d8d8;
 }
@@ -16535,8 +16556,8 @@ body {
   box-shadow: none;
 }
 
-#contact-header {
-  background-color: #012a3a;
+.contact-header {
+  background-color: white;
 }
 
 .breadcrumb-wrapper {
@@ -16584,6 +16605,36 @@ body {
 
 .filterButton {
   cursor: pointer;
+}
+
+header.black-text-header #navbarNav > ul > li > a {
+  color: #000;
+}
+
+header.black-text-header#navbarNav > ul > li > a:hover {
+  color: #007dab;
+}
+
+header.theme-main-menu.fixed #navbarNav > ul > li > a {
+  color: #ffffff;
+}
+
+header.theme-main-menu.fixed .right-widget ul li a {
+  color: #ffffff;
+  border-color: #ffffff;
+}
+
+header.theme-main-menu.fixed .right-widget ul li a:hover {
+  border-color: black;
+}
+
+@media (max-width: 991.98px) {
+  header.theme-main-menu #navbarNav > ul > li > a {
+    color: #fff !important;
+  }
+  header.theme-main-menu.fixed #navbarNav > ul > li > a {
+    color: #fff !important;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */
