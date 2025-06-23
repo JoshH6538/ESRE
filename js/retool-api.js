@@ -8,9 +8,14 @@ async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
   for (let attempt = 1; attempt <= retries; attempt++) {
     try {
       const response = await fetch(url, options);
+      console.log(`Attempt ${attempt} to fetch ${url}`);
       if (!response.ok) throw new Error(`Status ${response.status}`);
       const data = await response.json();
-      if (!Array.isArray(data)) throw new Error("Expected array");
+      if (!Array.isArray(data)) {
+        if (data.value && Array.isArray(data.value)) {
+          return data.value; // handle case where data is wrapped in 'value'
+        } else throw new Error("Expected array");
+      }
       return data;
     } catch (err) {
       console.warn(`Attempt ${attempt} failed:`, err.message);
@@ -52,5 +57,18 @@ export async function allBranches() {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({ type: "allBranches" }),
+  });
+}
+
+export async function allListings() {
+  console.log("allListings called");
+  var url = BASE_URL + "/listings";
+  console.log("Fetching listings from:", url);
+  return await fetchWithRetry(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({}),
   });
 }
