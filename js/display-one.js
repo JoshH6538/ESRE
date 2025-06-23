@@ -202,6 +202,7 @@ async function renderUser(user) {
     contactForm.appendChild(callButton);
   }
   // SECTION: Search Agent Form
+  selectForm;
   const branchSelect = document.getElementById("branchSelect");
   console.log("Branch select element:", branchSelect);
   if (branchSelect && branchSelect.childElementCount < 2) {
