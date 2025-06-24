@@ -10,6 +10,7 @@ async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
       const response = await fetch(url, options);
       console.log(`Attempt ${attempt} to fetch ${url}`);
       if (!response.ok) throw new Error(`Status ${response.status}`);
+      if (!response.ok) console.warn("Response Message: ", response.message);
       const data = await response.json();
       if (!Array.isArray(data)) {
         if (data.value && Array.isArray(data.value)) {

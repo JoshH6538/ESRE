@@ -25,12 +25,16 @@ function renderListings(listingArray) {
     col.setAttribute("data-wow-delay", `${delay}s`);
 
     const img = listing.imageUrls[0] || "/images/lazy.svg";
-    const title = listing.PropertyType || "Property";
-    const status = listing.ListingStatus || "AVAILABLE";
-    const address = `${listing.UnparsedAddress || ""}, ${listing.City || ""}`;
+    const title = listing.CountyOrParish || "Property";
+    const status = listing.MlsStatus || "N/A";
+    const address =
+      `${listing.UnparsedAddress || ""}, ${listing.City || ""}, ${
+        listing.StateOrProvince || ""
+      } ${listing.PostalCode || ""}`.trim() || "Address not available";
     const sqft = listing.LivingArea || "-";
+    const acres = listing.LotSizeAcres || "-";
     const beds = listing.BedroomsTotal || "-";
-    const baths = listing.BathroomsTotalDecimal || "-";
+    const baths = listing.BathroomsTotalInteger || "-";
     const price = listing.ListPrice || "N/A";
     const listingKey = listing.ListingKey || "N/A";
 
@@ -48,8 +52,8 @@ function renderListings(listingArray) {
           <div class="pl-footer tran4s">
             <ul class="style-none feature d-flex flex-wrap align-items-center justify-content-between">
               <li><strong class="color-dark fw-500">${sqft}</strong><span class="fs-16">sqft</span></li>
+              <li><strong class="color-dark fw-500">${acres}</strong><span class="fs-16">acres</span></li>
               <li><strong class="color-dark fw-500">${beds}</strong><span class="fs-16">bed</span></li>
-              <li><strong class="color-dark fw-500">-</strong><span class="fs-16">kitchen</span></li>
               <li><strong class="color-dark fw-500">${baths}</strong><span class="fs-16">bath</span></li>
             </ul>
           </div>
@@ -60,15 +64,6 @@ function renderListings(listingArray) {
 
     container.appendChild(col);
   });
-
-  const exploreButton = document.createElement("div");
-  exploreButton.className = "text-center mt-100 md-mt-60";
-  exploreButton.innerHTML = `
-    <a href="listing_details.html" class="btn-eight">
-      <span>Explore All</span> <i class="bi bi-arrow-up-right"></i>
-    </a>
-  `;
-  container.appendChild(exploreButton);
 }
 
 // Automatically load listings on page load
