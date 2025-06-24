@@ -1,16 +1,25 @@
 import { allBranches } from "./retool-api.js";
+
 const BRANCH_CACHE_KEY = "branchCache";
+const BRANCH_CACHE_EXPIRY_KEY = "branchCacheExpiry";
+const EXPIRATION_TIME = 60 * 60 * 1000; // 1 hour
 
 export async function getBranches() {
   const cached = localStorage.getItem(BRANCH_CACHE_KEY);
+  const expiry = localStorage.getItem(BRANCH_CACHE_EXPIRY_KEY);
 
-  if (cached) {
+  // Check cache validity
+  if (cached && expiry && Date.now() < parseInt(expiry, 10)) {
     console.log("Using cached branch data");
     try {
       return JSON.parse(cached);
     } catch {
-      localStorage.removeItem(BRANCH_CACHE_KEY); // fallback on parse fail
+      console.warn("Branch cache parse failed. Clearing corrupted cache.");
+      clearBranchCache();
     }
+  } else if (cached) {
+    console.log("Branch cache expired.");
+    clearBranchCache();
   }
 
   // Fetch fresh data
@@ -22,16 +31,19 @@ export async function getBranches() {
   }
   console.log("Branches fetched:", branches);
 
-  // Cache for future use
+  // Cache with expiration
   localStorage.setItem(BRANCH_CACHE_KEY, JSON.stringify(branches));
-
-  // clearBranchCache();
+  localStorage.setItem(
+    BRANCH_CACHE_EXPIRY_KEY,
+    (Date.now() + EXPIRATION_TIME).toString()
+  );
 
   return branches;
 }
 
 export function clearBranchCache() {
   localStorage.removeItem(BRANCH_CACHE_KEY);
+  localStorage.removeItem(BRANCH_CACHE_EXPIRY_KEY);
 }
 
 export function arrayToMap(array, keyField) {

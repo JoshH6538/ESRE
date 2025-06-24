@@ -1,19 +1,26 @@
 import { allRealtors } from "./retool-api.js";
-const USER_CACHE_KEY = "userCache";
-export async function getUserData() {
-  //   console.log("getUserData called");
-  const cached = localStorage.getItem(USER_CACHE_KEY);
 
-  if (cached) {
+const USER_CACHE_KEY = "userCache";
+const USER_CACHE_EXPIRY_KEY = "userCacheExpiry";
+const EXPIRATION_TIME = 60 * 60 * 1000; // 1 hour
+
+export async function getUserData() {
+  const cached = localStorage.getItem(USER_CACHE_KEY);
+  const expiry = localStorage.getItem(USER_CACHE_EXPIRY_KEY);
+
+  if (cached && expiry && Date.now() < parseInt(expiry, 10)) {
     console.log("Using cached user data");
     try {
       return JSON.parse(cached);
     } catch {
-      localStorage.removeItem(USER_CACHE_KEY); // fallback on parse fail
+      console.warn("User cache parse failed. Clearing corrupted cache.");
+      clearUserCache();
     }
+  } else if (cached) {
+    console.log("User cache expired.");
+    clearUserCache();
   }
 
-  // Fetch fresh data
   console.log("Fetching users...");
   const users = await allRealtors();
   if (!users || users.length === 0) {
@@ -22,12 +29,16 @@ export async function getUserData() {
   }
   console.log("Users fetched:", users);
 
-  // Cache for future use
-  localStorage.setItem("userCache", JSON.stringify(users));
+  localStorage.setItem(USER_CACHE_KEY, JSON.stringify(users));
+  localStorage.setItem(
+    USER_CACHE_EXPIRY_KEY,
+    (Date.now() + EXPIRATION_TIME).toString()
+  );
 
   return users;
 }
 
-export function clearuserCache() {
+export function clearUserCache() {
   localStorage.removeItem(USER_CACHE_KEY);
+  localStorage.removeItem(USER_CACHE_EXPIRY_KEY);
 }
