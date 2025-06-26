@@ -16633,5 +16633,66 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
     color: #fff !important;
   }
 }
+.listing-card-one .img-gallery img {
+  height: 300px;
+  object-fit: cover;
+  width: 100%;
+  display: block;
+}
+
+.price-range-wrap {
+  position: relative;
+}
+
+.price-range-wrap .slider {
+  position: relative;
+  height: 5px;
+  background: #e4e4e4;
+  margin-bottom: 10px;
+  border-radius: 2px;
+}
+
+.price-range-wrap .slider .progress {
+  position: absolute;
+  height: 100%;
+  background-color: var(--bs-primary, #0d1a1c);
+  border-radius: 2px;
+}
+
+.price-range-wrap .range-input {
+  position: relative;
+}
+
+.price-range-wrap input[type=range] {
+  position: absolute;
+  width: 100%;
+  top: -10px;
+  background: none;
+  pointer-events: none;
+  -webkit-appearance: none;
+}
+
+.price-range-wrap input[type=range]::-webkit-slider-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--bs-primary, #0d1a1c);
+  cursor: pointer;
+  pointer-events: all;
+  -webkit-appearance: none;
+}
+
+.price-range-wrap input[type=range]::-moz-range-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--bs-primary, #0d1a1c);
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.inactive-input {
+  background-color: rgba(0, 0, 0, 0.1882352941);
+}
 
 /*# sourceMappingURL=style.css.map */

@@ -54,7 +54,7 @@
       href="css/responsive.css"
       media="all"
     />
-    <script src="/js/display-one-listing copy.js" type="module"></script>
+    <script src="/js/display-one-listing.js" type="module"></script>
     <script src="/js/change-logo-on-scroll.js" type="module"></script>
 
     <!-- Fix Internet Explorer ______________________________________-->
@@ -159,8 +159,11 @@
                       <a class="nav-link" href="realtors.html">Realtors</a>
                     </li>
                     <!-- LISTINGS DROPDOWN -->
-                    <li class="nav-item me-5">
-                      <a class="nav-link" href="/#listings">Listings</a>
+                    <li
+                      class="nav-item active-menu me-5"
+                      style="white-space: nowrap"
+                    >
+                      <a class="nav-link" href="listings.html">Listings</a>
                     </li>
                     <!-- ABOUT LINK -->
                     <li class="nav-item me-5">
@@ -403,7 +406,7 @@
           </div>
           <!-- /.media-gallery -->
           <div class="row">
-            <div class="col-xl-7">
+            <div class="col-xl-12 col-12">
               <div class="bg-white shadow4 border-20">
                 <div class="property-overview p-40" id="property-overview">
                   <h4 class="mb-20">Overview</h4>
@@ -536,27 +539,6 @@
                   >
                 </div>
                 <!-- /.agent-info -->
-                <div class="mortgage-widget bg-white border-20 p-30 mb-40">
-                  <h5 class="mb-30">Mortgage Calculator</h5>
-                  <iframe
-                    class="mortgage-calculator border-15"
-                    src="https://www.calculator.io/embed/mortgage-calculator/"
-                    frameborder="0"
-                    width="100%"
-                    style="height: 450px"
-                    onload='javascript:(function(e){e.style.height=e.contentWindow.document.body.scrollHeight+15+"px";}(this));'
-                  >
-                  </iframe>
-                  <div class="text-center mt-20">
-                    <a
-                      href="https://www.calculator.io/mortgage-calculator/"
-                      target="_blank"
-                      class="fs-14 text-decoration-none"
-                    >
-                      View full calculator at Calculator.io
-                    </a>
-                  </div>
-                </div>
               </div>
               <!-- /.theme-sidebar-one -->
             </div>

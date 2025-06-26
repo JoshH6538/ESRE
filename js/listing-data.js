@@ -26,12 +26,12 @@ export async function getListings() {
     localStorage.removeItem(LISTING_CACHE_EXPIRY_KEY);
   }
 
-  console.log("Fetching listings from API...");
   const listings = await allListings();
   if (!Array.isArray(listings) || listings.length === 0) {
     console.warn("No listings returned from API.");
     return [];
   }
+  console.log("Fetched listings from API:", listings.length);
 
   localStorage.setItem(LISTING_CACHE_KEY, JSON.stringify(listings));
   localStorage.setItem(
