@@ -13,6 +13,27 @@ async function loadListings() {
     });
   }
   listingData = sortListings(listingData, "ListPrice-desc");
+  // Check for URL parameters to filter listings
+  const cityParam = new URLSearchParams(window.location.search).get("city");
+  if (cityParam) {
+    console.log("Filtering listings by city:", cityParam);
+    listingData = listingData.filter((listing) =>
+      listing.City?.toLowerCase().includes(cityParam.toLowerCase())
+    );
+    const cityInput = document.querySelector('input[name="city"]');
+    cityInput.value = cityParam;
+    cityInput.readOnly = true;
+    cityInput.classList.add("fw-bold");
+    const zipcodeInput = document.getElementById("zipcodeInput");
+    zipcodeInput.disabled = true;
+    document
+      .querySelector('input[name="zipcode"]')
+      .classList.add("inactive-input");
+
+    const cityListingName = document.getElementById("cityListingName");
+    cityListingName.innerHTML = `<p>Listings in <span style="color: #007dab">${cityParam}</span></p>`;
+    cityListingName.classList.remove("d-none");
+  }
   renderListings(listingData);
 }
 
