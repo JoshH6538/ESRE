@@ -179,7 +179,7 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
     !isNaN(maxPrice) &&
     maxPrice >= minPrice
   ) {
-    console.log("Filtering by price:", minPrice, maxPrice);
+    console.log("Filtering by price:", minPrice, " to ", maxPrice);
     filteredListings = filteredListings.filter(
       (listing) =>
         listing.ListPrice >= minPrice && listing.ListPrice <= maxPrice
@@ -200,6 +200,25 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
       (listing) => listing.LotSizeSquareFeet <= maxSqft
     );
   }
+
+  // === Beds Filter ===
+  const bedsInput = document.querySelector('input[name="bedsInput"]').value;
+  if (!isNaN(bedsInput) && bedsInput >= 2) {
+    console.log("Filtering by beds:", bedsInput);
+    filteredListings = filteredListings.filter(
+      (listing) => listing.BedroomsTotal >= bedsInput
+    );
+  }
+
+  // Baths Filter
+  const bathsInput = document.querySelector('input[name="bathsInput"]').value;
+  if (!isNaN(bathsInput) && bathsInput >= 2) {
+    console.log("Filtering by baths:", bathsInput);
+    filteredListings = filteredListings.filter(
+      (listing) => listing.BathroomsTotalInteger >= bathsInput
+    );
+  }
+
   // === Render Filtered Listings ===
   if (filteredListings.length > 0) {
     renderListings(filteredListings);
@@ -211,6 +230,20 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
     </div>`;
   }
 });
+
+// Price Range Slider
+document
+  .querySelector('input[name="minPrice"]')
+  .addEventListener("input", (e) => {
+    const minPriceRange = document.getElementById("minPriceRange");
+    minPriceRange.value = e.target.value;
+  });
+document
+  .querySelector('input[name="maxPrice"]')
+  .addEventListener("input", (e) => {
+    const maxPriceRange = document.getElementById("maxPriceRange");
+    maxPriceRange.value = e.target.value;
+  });
 
 document.addEventListener("DOMContentLoaded", () => {
   loadListings();
