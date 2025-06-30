@@ -66,7 +66,6 @@ async function renderUser(user) {
     { label: "Email", value: user["primaryEmail"] },
     { label: "Secondary Phone", value: user["secondaryPhone"] },
     { label: "Secondary Email", value: user["secondaryEmail"] },
-    { label: "NMLS ID", value: user["nlms"] },
   ];
   // Populate fields with fields array
   const fieldHtml = fields
@@ -82,7 +81,6 @@ async function renderUser(user) {
   // SECTION: Render user info into container
   container.innerHTML = `
     <h4>${fullName}</h4>
-    <div class="designation fs-16">${title}</div>
     <div>${fieldHtml}</div>`;
   // <ul class="style-none d-flex align-items-center social-icon mt-3">
   //   <li><a href="#"><i class="fa-brands fa-whatsapp"></i></a></li>
@@ -92,13 +90,13 @@ async function renderUser(user) {
   // </ul>
 
   // SECTION: Add "Apply Now" button if POS URL exists
-  if (user["posURL"]?.trim()) {
-    const button = document.createElement("button");
-    button.className = "btn-nine text-uppercase w-100 mb-20 mt-10";
-    button.textContent = "Apply Now";
-    button.onclick = () => window.open(user["posURL"], "_blank");
-    container.appendChild(button);
-  }
+  // if (user["posURL"]?.trim()) {
+  //   const button = document.createElement("button");
+  //   button.className = "btn-nine text-uppercase w-100 mb-20 mt-10";
+  //   button.textContent = "Apply Now";
+  //   button.onclick = () => window.open(user["posURL"], "_blank");
+  //   container.appendChild(button);
+  // }
 
   // SECTION: Update breadcrumb name
   const breadcrumb = document.getElementById("breadcrumbRealtorName");

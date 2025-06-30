@@ -387,7 +387,8 @@
 // Hero Banner Eight
 .hero-banner-eight {
   height: 100vh;
-  background: url(../images/es/small/city-small.jpg) no-repeat center top;
+  // background: url(../images/es/small/city-small.jpg) no-repeat center top;
+  background-image: none;
   background-size: cover;
   &::before {
     content: "";
@@ -396,7 +397,7 @@
     top: 0;
     width: 100%;
     height: 230px;
-    z-index: -1;
+    z-index: 0;
     background: linear-gradient(
       180deg,
       rgba(0, 0, 0, 0.81) 0%,

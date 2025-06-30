@@ -166,7 +166,7 @@
                     </li>
                     <!-- REALTORS LINK -->
                     <li class="nav-item me-5">
-                      <a class="nav-link" href="realtors.html">Realtors</a>
+                      <a class="nav-link" href="realtors.html">REALTORS&reg;</a>
                     </li>
                     <!-- LISTINGS DROPDOWN -->
                     <li class="nav-item me-5">
@@ -202,7 +202,12 @@
       <div
         class="hero-banner-eight z-1 pt-250 xl-pt-200 pb-250 xl-pb-150 lg-pb-100 position-relative"
       >
-        <div class="container position-relative">
+        <div class="video-overlay w-100 h-100"></div>
+        <video autoplay muted loop id="bannerVideo">
+          <source src="images/es/small/santaClarita1080.mp4" type="video/mp4" />
+        </video>
+
+        <div class="container position-relative" id="bannerContent">
           <div class="row">
             <div class="col-xl-9 col-lg-10 col-md-10 m-auto">
               <h1 class="hero-heading text-white text-center wow fadeInUp">
@@ -487,7 +492,7 @@
             <div
               class="title-one text-center text-lg-start mb-60 xl-mb-40 lg-mb-20 wow fadeInUp"
             >
-              <h3>Popular Locations</h3>
+              <h3>Popular Counties</h3>
             </div>
             <!-- /.title-one -->
 
@@ -496,24 +501,24 @@
             >
               <div
                 class="card-style-seven position-relative z-1 rounded-circle overflow-hidden d-flex align-items-center justify-content-center wow fadeInUp"
-                style="background-image: url(images/es/small/Pasadena.jpg)"
+                style="background-image: url(images/es/small/LA.jpg)"
+                data-wow-delay="0.1s"
               >
                 <a
-                  href="listings.html?city=South+Pasadena"
+                  href="listings.html?county=Los+Angeles"
                   class="title stretched-link"
-                  ><h4 class="text-white tran3s">South Pasadena</h4></a
+                  ><h4 class="text-white tran3s">Los Angeles</h4></a
                 >
               </div>
               <!-- /.card-style-seven -->
               <div
                 class="card-style-seven position-relative z-1 rounded-circle overflow-hidden d-flex align-items-center justify-content-center wow fadeInUp"
-                style="background-image: url(images/es/small/LA.jpg)"
-                data-wow-delay="0.1s"
+                style="background-image: url(images/es/small/Pasadena.jpg)"
               >
                 <a
-                  href="listings.html?city=Los+Angeles"
+                  href="listings.html?county=Orange"
                   class="title stretched-link"
-                  ><h4 class="text-white tran3s">Los Angeles</h4></a
+                  ><h4 class="text-white tran3s">Orange County</h4></a
                 >
               </div>
               <!-- /.card-style-seven -->
@@ -523,9 +528,9 @@
                 data-wow-delay="0.2s"
               >
                 <a
-                  href="listings.html?city=Whittier"
+                  href="listings.html?county=San+Bernardino"
                   class="title stretched-link"
-                  ><h4 class="text-white tran3s">Whittier</h4></a
+                  ><h4 class="text-white tran3s">San Bernardino</h4></a
                 >
               </div>
               <!-- /.card-style-seven -->
@@ -534,15 +539,29 @@
                 style="background-image: url(images/es/small/Downey.jpg)"
                 data-wow-delay="0.3s"
               >
-                <a href="listings.html?city=Downey" class="title stretched-link"
-                  ><h4 class="text-white tran3s">Downey</h4></a
+                <a
+                  href="listings.html?county=Riverside"
+                  class="title stretched-link"
+                  ><h4 class="text-white tran3s">Riverside</h4></a
+                >
+              </div>
+              <!-- /.card-style-seven -->
+              <div
+                class="card-style-seven position-relative z-1 rounded-circle overflow-hidden d-flex align-items-center justify-content-center wow fadeInUp"
+                style="background-image: url(images/es/small/ventura.jpg)"
+                data-wow-delay="0.3s"
+              >
+                <a
+                  href="listings.html?county=Ventura"
+                  class="title stretched-link"
+                  ><h4 class="text-white tran3s">Ventura</h4></a
                 >
               </div>
               <!-- /.card-style-seven -->
             </div>
             <div class="section-btn text-center md-mt-60">
               <a href="listings.html" class="btn-eleven"
-                ><span>See All listings</span>
+                ><span>See All Listings</span>
                 <i class="bi bi-chevron-right"></i
               ></a>
             </div>
@@ -799,7 +818,7 @@
 
             <div class="section-btn text-center md-mt-60">
               <a class="btn-one fw-normal" id="allRealtors" href="realtors.html"
-                >Meet Our Realtors</a
+                >Meet Our REALTORS&reg;</a
               >
             </div>
           </div>

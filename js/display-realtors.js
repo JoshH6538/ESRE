@@ -83,7 +83,6 @@ function renderRealtors(realtorArray) {
               ${realtor.firstName ?? "First"} ${realtor.lastName ?? "Last"}
             </a>
           </h6>
-          <div class="designation">${realtor.title ?? "Agent"}</div>
         </div>
       </div>
     `;

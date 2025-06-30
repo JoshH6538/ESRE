@@ -14,14 +14,14 @@ async function loadListings() {
   }
   listingData = sortListings(listingData, "ListPrice-desc");
   // Check for URL parameters to filter listings
-  const cityParam = new URLSearchParams(window.location.search).get("city");
-  if (cityParam) {
-    console.log("Filtering listings by city:", cityParam);
+  const countyParam = new URLSearchParams(window.location.search).get("county");
+  if (countyParam) {
+    console.log("Filtering listings by county:", countyParam);
     listingData = listingData.filter((listing) =>
-      listing.City?.toLowerCase().includes(cityParam.toLowerCase())
+      listing.CountyOrParish?.toLowerCase().includes(countyParam.toLowerCase())
     );
     const cityInput = document.querySelector('input[name="city"]');
-    cityInput.value = cityParam;
+    cityInput.value = countyParam;
     cityInput.readOnly = true;
     cityInput.classList.add("fw-bold");
     const zipcodeInput = document.getElementById("zipcodeInput");
@@ -31,7 +31,7 @@ async function loadListings() {
       .classList.add("inactive-input");
 
     const cityListingName = document.getElementById("cityListingName");
-    cityListingName.innerHTML = `<p>Listings in <span style="color: #007dab">${cityParam}</span></p>`;
+    cityListingName.innerHTML = `<p>Listings in <span style="color: #007dab">${countyParam}</span> County</p>`;
     cityListingName.classList.remove("d-none");
   }
   renderListings(listingData);

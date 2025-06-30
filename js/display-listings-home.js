@@ -18,10 +18,10 @@ function renderListings(listingArray) {
     return;
   }
 
-  listingArray.slice(0, 6).forEach((listing, index) => {
+  listingArray.slice(0, 8).forEach((listing, index) => {
     const delay = (index % 3) * 0.1;
     const col = document.createElement("div");
-    col.className = "col-lg-4 col-md-6 mt-40 wow fadeInUp";
+    col.className = "col-lg-3 col-md-6 mt-40 wow fadeInUp";
     col.setAttribute("data-wow-delay", `${delay}s`);
 
     const img = listing.imageUrls[0] || "/images/lazy.svg";

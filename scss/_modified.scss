@@ -210,3 +210,45 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
 .inactive-input {
   background-color: #00000030;
 }
+
+.card-style-seven {
+  flex: 1 1 0;
+  max-width: 300px; /* or whatever size fits all on one line */
+  max-height: 300px;
+  min-width: 250px;
+  min-height: 250px;
+}
+.wrapper {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+#bannerVideo {
+  position: absolute;
+  right: 0;
+  top: 0;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
+  width: 100%;
+  z-index: -2;
+  object-fit: cover;
+}
+
+.video-overlay {
+  background-color: #012a3a59;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-height: 100vh !important;
+}
+
+.hero-banner-eight {
+  &::before {
+    background: linear-gradient(
+      180deg,
+      rgba(0, 18, 25, 0.81) 0%,
+      rgba(1, 35, 48, 0.61) 49.49%,
+      rgba(0, 6, 8, 0) 100%
+    ) !important;
+  }
+}
