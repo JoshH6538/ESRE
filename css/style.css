@@ -16732,4 +16732,15 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
   background: linear-gradient(180deg, rgba(0, 18, 25, 0.81) 0%, rgba(1, 35, 48, 0.61) 49.49%, rgba(0, 6, 8, 0) 100%) !important;
 }
 
+@media (min-width: 992px) and (max-width: 1199px) {
+  .hero-banner-eight .hero-heading {
+    font-size: 70px !important;
+  }
+}
+@media (max-width: 991px) {
+  .hero-banner-eight .hero-heading {
+    font-size: 60px !important;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */

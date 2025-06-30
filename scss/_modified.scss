@@ -156,6 +156,8 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
   width: 100%;
   display: block;
 }
+
+// Price range slider styles
 .price-range-wrap {
   position: relative;
 }
@@ -207,10 +209,12 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
   pointer-events: all;
 }
 
+// Input styles for the city vs zip code search on realtors page
 .inactive-input {
   background-color: #00000030;
 }
 
+// Card styles for popular locations cards (counties)
 .card-style-seven {
   flex: 1 1 0;
   max-width: 300px; /* or whatever size fits all on one line */
@@ -222,6 +226,8 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
   flex-wrap: nowrap;
   justify-content: space-between;
 }
+
+// Hero Banner Eight (Main Banner) video background and overlay styles
 #bannerVideo {
   position: absolute;
   right: 0;
@@ -250,5 +256,17 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
       rgba(1, 35, 48, 0.61) 49.49%,
       rgba(0, 6, 8, 0) 100%
     ) !important;
+  }
+}
+
+// Changes to title font size for "Agents you trust. Results you love." specifically
+@media (min-width: 992px) and (max-width: 1199px) {
+  .hero-banner-eight .hero-heading {
+    font-size: 70px !important;
+  }
+}
+@media (max-width: 991px) {
+  .hero-banner-eight .hero-heading {
+    font-size: 60px !important;
   }
 }
