@@ -3155,7 +3155,7 @@ iframe {
 
 .hero-banner-eight {
   height: 100vh;
-  background-image: none;
+  background: none;
   background-size: cover;
 }
 .hero-banner-eight::before {
