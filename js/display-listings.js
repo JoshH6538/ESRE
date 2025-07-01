@@ -4,6 +4,9 @@ let listingData = [];
 
 async function loadListings() {
   listingData = await getListings();
+  listingData = listingData.filter(
+    (listing) => listing.MlsStatus?.toLowerCase().trim() !== "closed"
+  );
   const sortSelect = document.getElementById("sortSelect");
   if (sortSelect) {
     sortSelect.addEventListener("change", () => {

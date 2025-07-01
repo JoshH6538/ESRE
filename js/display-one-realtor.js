@@ -33,6 +33,7 @@ async function loadUserCached(userId) {
     console.warn(`No user found for ID: ${userId}`);
     return;
   }
+  console.log("User found in cache:", user);
 
   renderUser(user);
 }
@@ -112,9 +113,11 @@ async function renderUser(user) {
   wrapper.classList.toggle("bg-dark", !user.iconURL?.trim());
   wrapper.classList.toggle("bg-white", !!user.iconURL?.trim());
   wrapper.style.backgroundImage = `url(${iconURL})`;
+  wrapper.style.backgroundSize = "contain";
+  wrapper.style.backgroundPosition = "center";
 
   wrapper.innerHTML = `
-    <div class="tag bg-white position-absolute text-uppercase" style="top: 10px; left: 10px;">
+    <div class="tag bg-white position-absolute text-uppercase" style="top: 50px; left: 10px;">
       ${branchName}
     </div>
   `;
@@ -200,32 +203,116 @@ async function renderUser(user) {
 
     contactForm.appendChild(callButton);
   }
-  // SECTION: Search Agent Form
-  // selectForm;
-  const branchSelect = document.getElementById("branchSelect");
-  console.log("Branch select element:", branchSelect);
-  if (branchSelect && branchSelect.childElementCount < 2) {
-    branchSelect.innerHTML = ""; // Clear previous options
-    console.log("Cleared branch select options", branchSelect);
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "All Branches";
-    branchSelect.appendChild(defaultOption);
 
-    branches.forEach((branch) => {
-      const option = document.createElement("option");
-      option.value = branch.branchId;
-      option.textContent = branch.name;
-      branchSelect.appendChild(option);
-    });
-
-    branchSelect.value = user.branchId || ""; // Set to user's branch or default
-  }
   // SECTION: Update Realtor Listings
   const listings = await getListings();
-  const listingCache = arrayToMap(listings, "ListAgentFullName");
-  console.log("Listings map:", listingCache);
   const listingsContainer = document.getElementById("isotop-gallery-wrapper");
+  console.log("Listings loaded:", listings.length);
+
+  // Filter listings for the specific agent
+  const userListings = listings.filter((listing) => {
+    const agentName = listing.ListAgentFullName?.toLowerCase().trim();
+    const agentFirstName = listing.ListAgentFirstName?.toLowerCase().trim();
+    const agentLastName = listing.ListAgentLastName?.toLowerCase().trim();
+
+    const userName = fullName.toLowerCase().trim();
+    const userFirstName = user.firstName?.toLowerCase().trim();
+    const userLastName = user.lastName?.toLowerCase().trim();
+
+    return (
+      agentName === userName ||
+      (agentFirstName === userFirstName && agentLastName === userLastName) ||
+      (agentName.includes(userFirstName) && agentName.includes(userLastName)) ||
+      (userName.includes(agentFirstName) && userName.includes(agentLastName))
+    );
+  });
+
+  console.log("Filtered user listings:", userListings.length);
+
+  // Clear previous content
+  listingsContainer.innerHTML = `<div class="grid-sizer"></div>`;
+  if (!userListings?.length) {
+    document.getElementById("listingsContainer").classList.add("d-none");
+  }
+  // Render each listing
+  for (const listing of userListings) {
+    const listingItem = document.createElement("div");
+    listingItem.className = "isotop-item";
+
+    // Add status class
+    switch (listing.MlsStatus) {
+      case "Active":
+        listingItem.classList.add("open");
+        break;
+      case "Pending":
+        listingItem.classList.add("pending");
+        break;
+      case "Closed":
+        listingItem.classList.add("closed");
+        break;
+    }
+
+    // Build address
+    const address = [
+      listing.UnparsedAddress,
+      listing.City,
+      listing.PostalCode,
+      listing.StateOrProvince,
+    ]
+      .filter(Boolean)
+      .join(", ");
+
+    // Images
+    const images = Array.isArray(listing.imageUrls) ? listing.imageUrls : [];
+    const mainImage = images[0] || "images/listing/img_70.jpg";
+
+    // Fancybox group name to avoid cross-mixing galleries
+    const fancyGroup = `gallery-${listing.ListingKey}`;
+
+    const sliderAnchors = images
+      .map(
+        (url) => `
+      <a href="${url}" class="d-block" data-fancybox="${fancyGroup}" data-caption="${address}"></a>`
+      )
+      .join("");
+
+    // Build listing card HTML
+    listingItem.innerHTML = `
+    <div class="listing-card-one shadow-none style-two mb-50">
+      <div class="img-gallery">
+        <div class="position-relative overflow-hidden">
+          <div class="tag bg-white text-dark fw-500">
+            ${listing.MlsStatus || "N/A"}
+          </div>
+          <img src="${mainImage}" class="w-100" alt="${address}" />
+
+          <div class="img-slider-btn">
+            ${images.length} <i class="fa-regular fa-image"></i>
+            ${sliderAnchors}
+          </div>
+        </div>
+      </div>
+      <!-- /.img-gallery -->
+
+      <div class="property-info d-flex justify-content-between align-items-end pt-30">
+        <div class ="pe-1">
+          <strong class="price fw-500 color-dark">
+            $${Number(listing.ListPrice || 0).toLocaleString()}
+          </strong>
+          <div class="address pt-5 m0">${address}</div>
+        </div>
+        <a href="listing_details.html?listingKey=${
+          listing.ListingKey
+        }" class="btn-four mb-5">
+          <i class="bi bi-arrow-up-right"></i>
+        </a>
+      </div>
+      <!-- /.property-info -->
+    </div>
+  `;
+
+    listingsContainer.appendChild(listingItem);
+  }
 }
 
 // SECTION: Initialize the page

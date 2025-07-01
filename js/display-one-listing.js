@@ -52,9 +52,11 @@ function renderListingDetails(listing) {
     <li><img src="images/icon/icon_50.svg" class="icon" /><span class="fs-20 color-dark">Type . ${type}</span></li>
   `;
 
+  const imageLength = listing.imageUrls?.length || 0;
+
   document.getElementById(
     "seeAllPhotos"
-  ).textContent = `See All ${listing.imageUrls.length} Photos`;
+  ).textContent = `See All ${imageLength} Photos`;
 
   // Media carousel
   const carouselInner = document.querySelector(".carousel-inner");
