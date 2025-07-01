@@ -57,7 +57,7 @@ function renderRealtors(realtorArray) {
     const iconURL =
       realtor.iconURL && realtor.iconURL.trim() !== ""
         ? realtor.iconURL
-        : "images/lazy.svg";
+        : "https://equitysmartloans.com/wp-content/uploads/2022/05/placeHolder.jpeg";
 
     const branch = branchMap.get(realtor.branchId);
     const branchName = branch?.name ?? "Unknown Branch";
@@ -66,9 +66,7 @@ function renderRealtors(realtorArray) {
 
     col.innerHTML = `
       <div class="agent-card-two position-relative z-1 mb-50 wow fadeInUp">
-        <div class="media ${
-          iconURL !== "images/lazy.svg" ? "bg-white" : "bg-dark"
-        } position-relative overflow-hidden">
+        <div class="media position-relative overflow-hidden">
           <div class="tag bg-white position-absolute text-uppercase">${branchName}</div>
           <img
             loading="lazy"

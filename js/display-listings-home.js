@@ -1,7 +1,10 @@
 import { getListings } from "./listing-data.js";
 
 async function loadListings() {
-  const listings = await getListings();
+  let listings = await getListings();
+  listings = listings.filter(
+    (listing) => listing.MlsStatus?.toLowerCase().trim() !== "closed"
+  );
   renderListings(listings);
 }
 
