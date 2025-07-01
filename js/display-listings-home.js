@@ -38,7 +38,7 @@ function renderListings(listingArray) {
     const acres = listing.LotSizeAcres || "-";
     const beds = listing.BedroomsTotal || "-";
     const baths = listing.BathroomsTotalInteger || "-";
-    const price = listing.ListPrice || "N/A";
+    const price = listing.ListPrice.toLocaleString() || "N/A";
     const listingKey = listing.ListingKey || "N/A";
 
     col.innerHTML = `

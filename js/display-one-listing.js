@@ -32,7 +32,7 @@ function renderListingDetails(listing) {
 
   // Estimated mortgage (very rough)
   const estPrice = listing.ListPrice
-    ? Math.floor(listing.ListPrice / (12 * 30))
+    ? Math.floor(listing.ListPrice / (12 * 30)).toLocaleString()
     : "N/A";
   document.querySelector(".est-price").innerHTML = `
     Est. Payment <span class="fw-500 color-dark">$${estPrice}/mo*</span> 30 years
