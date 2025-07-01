@@ -1,6 +1,7 @@
 import { findRealtorById } from "./retool-api.js";
 import { getBranches, arrayToMap } from "./branch-data.js";
 import { getUserData } from "./user-data.js";
+import { getListings } from "./listing-data.js";
 
 // Grab the userId from the URL query parameters
 const userId = new URLSearchParams(window.location.search).get("userId");
@@ -200,7 +201,7 @@ async function renderUser(user) {
     contactForm.appendChild(callButton);
   }
   // SECTION: Search Agent Form
-  selectForm;
+  // selectForm;
   const branchSelect = document.getElementById("branchSelect");
   console.log("Branch select element:", branchSelect);
   if (branchSelect && branchSelect.childElementCount < 2) {
@@ -220,6 +221,11 @@ async function renderUser(user) {
 
     branchSelect.value = user.branchId || ""; // Set to user's branch or default
   }
+  // SECTION: Update Realtor Listings
+  const listings = await getListings();
+  const listingCache = arrayToMap(listings, "ListAgentFullName");
+  console.log("Listings map:", listingCache);
+  const listingsContainer = document.getElementById("isotop-gallery-wrapper");
 }
 
 // SECTION: Initialize the page
