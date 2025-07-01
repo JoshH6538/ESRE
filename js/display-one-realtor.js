@@ -284,7 +284,7 @@ async function renderUser(user) {
           <div class="tag bg-white text-dark fw-500">
             ${listing.MlsStatus || "N/A"}
           </div>
-          <img src="${mainImage}" class="w-100" alt="${address}" />
+          <img src="${mainImage}" class="w-100" alt="${address}" loading="lazy"/>
 
           <div class="img-slider-btn">
             ${images.length} <i class="fa-regular fa-image"></i>

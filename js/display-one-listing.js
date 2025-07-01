@@ -46,10 +46,10 @@ function renderListingDetails(listing) {
   const acres = listing.LotSizeAcres || "-";
 
   document.querySelector(".property-feature-list ul").innerHTML = `
-    <li><img src="images/icon/icon_47.svg" class="icon" /><span class="fs-20 color-dark">Sqft . ${sqft}</span></li>
-    <li><img src="images/icon/icon_48.svg" class="icon" /><span class="fs-20 color-dark">Bed . ${beds}</span></li>
-    <li><img src="images/icon/icon_49.svg" class="icon" /><span class="fs-20 color-dark">Bath . ${baths}</span></li>
-    <li><img src="images/icon/icon_50.svg" class="icon" /><span class="fs-20 color-dark">Type . ${type}</span></li>
+    <li><img src="images/icon/icon_47.svg" class="icon" /><span class="fs-20 color-dark" loading="lazy">Sqft . ${sqft}</span></li>
+    <li><img src="images/icon/icon_48.svg" class="icon" /><span class="fs-20 color-dark" loading="lazy">Bed . ${beds}</span></li>
+    <li><img src="images/icon/icon_49.svg" class="icon" /><span class="fs-20 color-dark" loading="lazy">Bath . ${baths}</span></li>
+    <li><img src="images/icon/icon_50.svg" class="icon" /><span class="fs-20 color-dark" loading="lazy">Type . ${type}</span></li>
   `;
 
   const imageLength = listing.imageUrls?.length || 0;
@@ -77,7 +77,7 @@ function renderListingDetails(listing) {
         <div class="carousel-item ${activeClass}">
           <img src="${url}" alt="Listing image ${
         index + 1
-      }" class="border-20 w-100" />
+      }" class="border-20 w-100" loading="lazy"/>
         </div>
       `;
 
@@ -91,7 +91,7 @@ function renderListingDetails(listing) {
           aria-label="Slide ${index + 1}">
           <img src="${url}" alt="Thumbnail ${
         index + 1
-      }" class="border-10 w-100" />
+      }" class="border-10 w-100" loading="lazy"/>
         </button>
       `;
     }
@@ -120,19 +120,19 @@ function renderListingDetails(listing) {
     <div class="property-feature-list mt-40">
       <ul class="style-none d-flex flex-wrap align-items-center justify-content-between">
         <li>
-          <img src="images/es/svg/icon_73.svg" alt="" class="lazy-img icon" />
+          <img src="images/es/svg/icon_73.svg" alt="" class="lazy-img icon" loading="lazy"/>
           <span class="fs-20 color-dark">Sqft . ${sqft}</span>
         </li>
         <li>
-          <img src="images/icon/icon_51.svg" alt="" class="lazy-img icon" />
+          <img src="images/icon/icon_51.svg" alt="" class="lazy-img icon" loading="lazy"/>
           <span class="fs-20 color-dark">Acres . ${acres}</span>
         </li>
         <li>
-          <img src="images/icon/icon_48.svg" alt="" class="lazy-img icon" />
+          <img src="images/icon/icon_48.svg" alt="" class="lazy-img icon" loading="lazy"/>
           <span class="fs-20 color-dark">Bed . ${beds}</span>
         </li>
         <li>
-          <img src="images/icon/icon_49.svg"  alt="" class="lazy-img icon" />
+          <img src="images/icon/icon_49.svg"  alt="" class="lazy-img icon" loading="lazy"/>
           <span class="fs-20 color-dark">Bath . ${baths}</span>
         </li>
 

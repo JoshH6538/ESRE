@@ -118,7 +118,7 @@ function renderListings(listingArray) {
           <div class="position-relative overflow-hidden">
             <div class="tag fw-500">${status}</div>
             <a href="listing_details.html?listingKey=${listingKey}" class="d-block">
-              <img src="${img}" class="w-100" alt="Listing Image" />
+              <img src="${img}" class="w-100" alt="Listing Image" loading="lazy" />
             </a>
           </div>
         </div>
