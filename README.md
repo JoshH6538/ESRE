@@ -74,3 +74,13 @@ MongoDB (Data Layer)
 - All credentials stored in environment variables
 - Public API access returns only sanitized, non-sensitive data
 - CORS restricted to allowed origins (e.g., GitHub Pages)
+
+## Resources
+
+Retool Workflows Documentation
+
+Trestle API Guide
+
+AWS Lambda
+
+AWS API Gateway
