@@ -1,21 +1,76 @@
-# Equity Smart Real Estate Website
+# Equity Smart Real Estate Web App
 
-Welcome to the Equity Smart Real Estate static website. This project is built using the **Homy Real Estate HTML5 Template & Dashboard**, a modern and responsive front-end template designed for real estate agencies, property listings, and client engagement.
+A full-stack serverless real estate listing platform featuring realtor and IDX listing search, secure API integration, and fully static frontend deployment. Built with MongoDB, AWS, and Retool, and deployed via GitHub Pages + CloudFront.
 
----
+## Overview
 
-## 🔍 About the Template
+Equity Smart Real Estate (ESRE) enables dynamic search and display of realtors and property listings through a secure, modern web architecture:
 
-**Homy** is a sophisticated HTML5 real estate template offering:
+- **Secure Serverless Backend** using AWS Lambda and API Gateway
+- **Retool Workflows** powering MongoDB queries and API interaction
+- **Public-Safe Frontend** hosted on GitHub Pages, using vanilla JS, HTML, CSS, and SASS
+- **Fully Static Client** with client-side filtering and data caching
+- **Cloud Distribution** via AWS S3 & CloudFront
 
-- Clean, professional design
-- Fully responsive layout
-- Multiple listing layouts
-- Agent profiles
-- Property detail pages
-- Dashboard features
-- Customizable components and elements
+## Architecture
 
-> This project is purely static (HTML/CSS/JS) and does not include backend functionality.
+Client (GitHub Pages / S3)
+↓
+CloudFront (CDN + HTTPS)
+↓
+API Gateway (Public Endpoint)
+↓
+Lambda (Secure Proxy)
+↓
+Retool Workflow (API Logic)
+↓
+MongoDB (Data Layer)
 
----
+## Key Features
+
+- **Serverless & Scalable**: No backend servers to maintain
+- **Secure Data Flow**: API keys and credentials handled entirely server-side
+- **IDX Integration**: Dynamic property data from Trestle RESO Web API via OAuth2
+- **CORS-Safe**: Controlled domain access for frontend API usage
+- **Real-Time Search**: Frontend pulls and filters listings locally
+- **DevOps Ready**: GitHub Actions auto-deploys latest frontend build to AWS S3
+
+## Frontend Structure
+
+```bash
+📁 RealEstate/
+├── css/
+├── fonts/
+├── images/
+│   └── agent/, assets/, blog/, es/
+├── js/
+│   ├── credentials.js
+│   ├── display-realtors.js
+│   ├── map-script.js
+│   ├── retool-api.js
+│   └── theme.js
+├── scss/
+├── index.html
+├── agent.html
+├── agent_details.html
+└── 404.html
+```
+
+## Backend Components
+
+- **Lambda Function**: Validates, routes, and securely proxies requests to Retool
+- **Retool Workflows**:
+- **Realtors Workflow**: Fetch and return sanitized realtor data
+- **IDX Workflow**: Authenticated access to Trestle API for live listing data
+- **MongoDB**: Structured storage, managed via Retool
+
+## Deployment
+
+- **Frontend**: Deployed via GitHub Actions to S3, served via CloudFront w/ HTTPS
+- **Backend**: Deployed on AWS Lambda, invoked via API Gateway POST /
+
+## Security Notes
+
+- All credentials stored in environment variables
+- Public API access returns only sanitized, non-sensitive data
+- CORS restricted to allowed origins (e.g., GitHub Pages)
