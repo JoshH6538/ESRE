@@ -77,10 +77,7 @@ MongoDB (Data Layer)
 
 ## Resources
 
-Retool Workflows Documentation
-
-Trestle API Guide
-
-AWS Lambda
-
-AWS API Gateway
+- [Retool Workflows Documentation](https://docs.retool.com/docs/workflows):
+- [Trestle API Guide](https://docs.corelogic.com/display/Trestle)
+- [AWS Lambda](https://docs.aws.amazon.com/lambda/)
+- [AWS API Gateway](https://docs.aws.amazon.com/apigateway/)
