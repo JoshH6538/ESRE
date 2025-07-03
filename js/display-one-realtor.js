@@ -39,6 +39,9 @@ async function loadUserCached(userId) {
 }
 // SECTION: Populate page with user data
 async function renderUser(user) {
+  // SECTION: UPDATE SITE TITLE
+  document.title = `${user.firstName} ${user.lastName} | ESRE`;
+
   // SECTION: Prepare data
   const branchArray = await getBranches();
   const branches = arrayToMap(branchArray, "branchId");
