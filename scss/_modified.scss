@@ -273,3 +273,10 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
   width: 300px;
   margin-bottom: 0.5rem;
 }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}

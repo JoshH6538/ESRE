@@ -16751,4 +16751,11 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
   margin-bottom: 0.5rem;
 }
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
 /*# sourceMappingURL=style.css.map */
