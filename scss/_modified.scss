@@ -34,8 +34,7 @@
 }
 // Changes the background image of the contact section
 .fancy-banner-five {
-  background: url(../images/es/small/confident-businesspeople-standing-in-office-2025-04-04-20-28-40-utc.jpg)
-    no-repeat center;
+  background: url(../images/es/small/white-house.jpg) no-repeat center;
   background-size: cover;
   background-attachment: fixed;
 }
@@ -269,4 +268,8 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
   .hero-banner-eight .hero-heading {
     font-size: 60px !important;
   }
+}
+#branchFilter .branch-option {
+  width: 300px;
+  margin-bottom: 0.5rem;
 }

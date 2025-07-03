@@ -67,7 +67,7 @@ async function renderUser(user) {
     { label: "Phone", value: user["primaryPhone"] },
     { label: "Email", value: user["primaryEmail"] },
     { label: "Secondary Phone", value: user["secondaryPhone"] },
-    { label: "Secondary Email", value: user["secondaryEmail"] },
+    // { label: "Secondary Email", value: user["secondaryEmail"] },
   ];
   // Populate fields with fields array
   const fieldHtml = fields

@@ -535,7 +535,7 @@
 }
 // Fancy Banner Two
 .fancy-banner-two {
-  background: url(../images/es/small/city-small.jpg) no-repeat center;
+  background: url(../images/es/small/suburbs-wide.jpg) no-repeat center;
   background-size: cover;
   background-attachment: fixed;
   &:before {
@@ -1118,4 +1118,8 @@
     z-index: 0;
     opacity: 0.7;
   }
+}
+
+.btn-six:hover {
+  background: lighten(#007dab, 3%);
 }

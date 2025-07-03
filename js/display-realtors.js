@@ -92,11 +92,23 @@ function renderRealtors(realtorArray) {
   if (branchFilter) {
     branchFilter.innerHTML = ""; // Clear existing content
     // Sort branches by name
-    const sortedBranches = Array.from(branchMap.values()).sort((a, b) =>
+    let sortedBranches = Array.from(branchMap.values()).sort((a, b) =>
       a.name.localeCompare(b.name)
     );
+
+    // TESTING REMOVE NON CA BRANCHES
+    // Filter out branches not in CA
+    sortedBranches = sortedBranches.filter((branch) => {
+      // Exclude branches with "fl" in
+      return (
+        !branch.name.toLowerCase().includes(" fl") &&
+        !branch.name.toLowerCase().includes("fl ")
+      );
+    });
+    console.log("[Filter] Branches after CA filter:", sortedBranches);
     sortedBranches.forEach((branch) => {
       const li = document.createElement("li");
+      li.classList.add("branch-option");
       li.innerHTML = `
         <input type="checkbox" value="${branch.branchId}" />
         <label>${branch.name}</label>
@@ -129,11 +141,11 @@ document
     let filtered = allRealtorsData.slice();
 
     // === Title filter ===
-    if (title !== "(none)") {
-      filtered = filtered.filter((realtor) => {
-        return title != "" && realtor.title.includes(title);
-      });
-    }
+    // if (title !== "(none)") {
+    //   filtered = filtered.filter((realtor) => {
+    //     return title != "" && realtor.title.includes(title);
+    //   });
+    // }
 
     // === Zipcode filter ===
     if (zipcode !== "(none)") {
