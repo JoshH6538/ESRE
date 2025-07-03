@@ -16758,4 +16758,49 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
   -webkit-box-sizing: border-box;
 }
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+}
+.advance-search-panel .main-bg .form-widget a span {
+  background-color: transparent;
+}
+.advance-search-panel .main-bg .form-widget a:hover i {
+  animation: spin 0.5s ease 1 !important;
+}
+.advance-search-panel .main-bg .form-widget a:hover span {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.branch-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.branch-option label span {
+  display: inline-block;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.branch-option:hover label span {
+  color: #007dab;
+  transform: translateX(20px) scale(1.05);
+}
+
+.footer-three .footer-nav-link a {
+  display: inline-block;
+  transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.footer-three .footer-nav-link a:hover {
+  color: #007dab;
+  transform: translateX(20px) scale(1.05);
+}
+
 /*# sourceMappingURL=style.css.map */

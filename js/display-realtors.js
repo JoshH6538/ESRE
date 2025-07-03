@@ -111,7 +111,7 @@ function renderRealtors(realtorArray) {
       li.classList.add("branch-option");
       li.innerHTML = `
         <input type="checkbox" value="${branch.branchId}" />
-        <label>${branch.name}</label>
+        <label><span>${branch.name}</span></label>
       `;
       branchFilter.appendChild(li);
     });
