@@ -37,8 +37,8 @@ function renderRealtors(realtorArray) {
     branches = JSON.parse(raw);
   }
   branchMap = arrayToMap(branches, "branchId"); // Ensure branches is a map
-  console.log("Rendering Realtors:", realtorArray);
-  console.log("Using Branches:", branchMap);
+  // console.log("Rendering Realtors:", realtorArray);
+  // console.log("Using Branches:", branchMap);
 
   const container = document.getElementById("realtorContainer");
   container.innerHTML = "";
@@ -105,7 +105,7 @@ function renderRealtors(realtorArray) {
         !branch.name.toLowerCase().includes("fl ")
       );
     });
-    console.log("[Filter] Branches after CA filter:", sortedBranches);
+    // console.log("[Filter] Branches after CA filter:", sortedBranches);
     sortedBranches.forEach((branch) => {
       const li = document.createElement("li");
       li.classList.add("branch-option");
@@ -169,9 +169,9 @@ document
     }
 
     // === Summary ===
-    console.log(
-      `[Filter] Final result count: ${filtered.length} of ${allRealtorsData.length}`
-    );
+    // console.log(
+    //   `[Filter] Final result count: ${filtered.length} of ${allRealtorsData.length}`
+    // );
 
     // === Sort & Render ===
     const currentSort = document.getElementById("sortSelect").value;
@@ -185,7 +185,7 @@ document
       document.activeElement?.blur();
       modal.hide();
 
-      console.log("[Filter] Modal closed.");
+      // console.log("[Filter] Modal closed.");
     }
 
     const clearBtn = document.getElementById("clearFiltersBtn");
@@ -193,10 +193,10 @@ document
     // Check if any filters were used
     if (areFiltersActive({ title, zipcode: zipcode, selectedBranchIds })) {
       clearBtn.classList.remove("d-none");
-      console.log("[UI] Showing Clear Filters button");
+      // console.log("[UI] Showing Clear Filters button");
     } else {
       clearBtn.classList.add("d-none");
-      console.log("[UI] Hiding Clear Filters button");
+      // console.log("[UI] Hiding Clear Filters button");
     }
 
     renderRealtors(sortedFiltered);
@@ -211,7 +211,7 @@ function areFiltersActive({ title, zipcode, selectedBranchIds }) {
 }
 // Clear Filters Functionality
 document.getElementById("clearFiltersBtn").addEventListener("click", () => {
-  console.log("[Action] Clear Filters clicked.");
+  // console.log("[Action] Clear Filters clicked.");
 
   const form = document.getElementById("realtorFitlerForm");
 
@@ -235,7 +235,7 @@ document.getElementById("clearFiltersBtn").addEventListener("click", () => {
   renderRealtors(allRealtorsData);
   updateResultsCount(allRealtorsData.length);
 
-  console.log("[Filter] Cleared filters and restored full list.");
+  // console.log("[Filter] Cleared filters and restored full list.");
 });
 
 // Reset Filter Functionality
@@ -260,7 +260,7 @@ document
       $("select").niceSelect("update"); // refresh the UI
     }
 
-    console.log("Filters reset");
+    // console.log("Filters reset");
   });
 
 // Update results count

@@ -9,7 +9,7 @@ export async function getUserData() {
   const expiry = localStorage.getItem(USER_CACHE_EXPIRY_KEY);
 
   if (cached && expiry && Date.now() < parseInt(expiry, 10)) {
-    console.log("Using cached user data");
+    console.log("Using cached user data.");
     try {
       return JSON.parse(cached);
     } catch {
@@ -21,13 +21,13 @@ export async function getUserData() {
     clearUserCache();
   }
 
-  console.log("Fetching users...");
+  // console.log("Fetching users...");
   const users = await allRealtors();
   if (!users || users.length === 0) {
     console.warn("No users found or API call failed.");
     return [];
   }
-  console.log("Users fetched:", users);
+  // console.log("Users fetched:", users);
 
   localStorage.setItem(USER_CACHE_KEY, JSON.stringify(users));
   localStorage.setItem(

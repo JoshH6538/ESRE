@@ -10,7 +10,7 @@ async function loadListings() {
   const sortSelect = document.getElementById("sortSelect");
   if (sortSelect) {
     sortSelect.addEventListener("change", () => {
-      console.log("Sort changed to:", sortSelect.value);
+      // console.log("Sort changed to:", sortSelect.value);
       const sorted = sortListings(listingData, sortSelect.value);
       renderListings(sorted);
     });
@@ -19,7 +19,7 @@ async function loadListings() {
   // Check for URL parameters to filter listings
   const countyParam = new URLSearchParams(window.location.search).get("county");
   if (countyParam) {
-    console.log("Filtering listings by county:", countyParam);
+    // console.log("Filtering listings by county:", countyParam);
     listingData = listingData.filter((listing) =>
       listing.CountyOrParish?.toLowerCase().includes(countyParam.toLowerCase())
     );
@@ -42,7 +42,6 @@ async function loadListings() {
 
 function sortListings(data, sortBy) {
   const [key, order] = sortBy.split("-");
-  console.log("-----------------------------------------------");
   return data.slice().sort((a, b) => {
     let valA = a[key];
     let valB = b[key];
@@ -174,7 +173,7 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   // === City Filter ===
   const city = document.querySelector('input[name="city"]').value.trim();
   if (city && city !== "") {
-    console.log("Filtering by city:", city);
+    // console.log("Filtering by city:", city);
     filteredListings = filteredListings.filter((listing) =>
       listing.City?.toLowerCase().includes(city.toLowerCase())
     );
@@ -184,7 +183,7 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
     document.querySelector('input[name="zipcode"]').value.trim()
   );
   if (zipcode && zipcode !== "") {
-    console.log("Filtering by zipcode:", zipcode);
+    // console.log("Filtering by zipcode:", zipcode);
     filteredListings = filteredListings.filter((listing) =>
       listing.PostalCode?.toString().includes(zipcode)
     );
@@ -203,7 +202,7 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
     !isNaN(maxPrice) &&
     maxPrice >= minPrice
   ) {
-    console.log("Filtering by price:", minPrice, " to ", maxPrice);
+    // console.log("Filtering by price:", minPrice, " to ", maxPrice);
     filteredListings = filteredListings.filter(
       (listing) =>
         listing.ListPrice >= minPrice && listing.ListPrice <= maxPrice
@@ -213,13 +212,13 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   const minSqft = parseFloat(document.getElementById("minSqft").value);
   const maxSqft = parseFloat(document.getElementById("maxSqft").value);
   if (!isNaN(minSqft)) {
-    console.log("Filtering by min sqft:", minSqft);
+    // console.log("Filtering by min sqft:", minSqft);
     filteredListings = filteredListings.filter(
       (listing) => listing.LotSizeSquareFeet >= minSqft
     );
   }
   if (!isNaN(maxSqft)) {
-    console.log("Filtering by max sqft:", maxSqft);
+    // console.log("Filtering by max sqft:", maxSqft);
     filteredListings = filteredListings.filter(
       (listing) => listing.LotSizeSquareFeet <= maxSqft
     );
@@ -228,7 +227,7 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   // === Beds Filter ===
   const bedsInput = document.querySelector('input[name="bedsInput"]').value;
   if (!isNaN(bedsInput) && bedsInput >= 2) {
-    console.log("Filtering by beds:", bedsInput);
+    // console.log("Filtering by beds:", bedsInput);
     filteredListings = filteredListings.filter(
       (listing) => listing.BedroomsTotal >= bedsInput
     );
@@ -237,7 +236,7 @@ document.getElementById("searchForm").addEventListener("submit", (e) => {
   // Baths Filter
   const bathsInput = document.querySelector('input[name="bathsInput"]').value;
   if (!isNaN(bathsInput) && bathsInput >= 2) {
-    console.log("Filtering by baths:", bathsInput);
+    // console.log("Filtering by baths:", bathsInput);
     filteredListings = filteredListings.filter(
       (listing) => listing.BathroomsTotalInteger >= bathsInput
     );

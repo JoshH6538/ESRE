@@ -8,7 +8,7 @@ const userId = new URLSearchParams(window.location.search).get("userId");
 
 // Grab the user from all users cached in localStorage
 async function loadUserCached(userId) {
-  console.log("Loading user from cache...");
+  // console.log("Loading user from cache...");
   // SECTION: Check if userId is valid
   const raw = localStorage.getItem("userCache");
   if (!raw) {
@@ -33,7 +33,7 @@ async function loadUserCached(userId) {
     console.warn(`No user found for ID: ${userId}`);
     return;
   }
-  console.log("User found in cache:", user);
+  // console.log("User found in cache:", user);
 
   renderUser(user);
 }
@@ -180,7 +180,7 @@ async function renderUser(user) {
         body
       )}`;
 
-      console.log("Submitting inquiry via mailto:", mailtoURL);
+      // console.log("Submitting inquiry via mailto:", mailtoURL);
       window.location.href = mailtoURL;
     });
 
@@ -200,7 +200,7 @@ async function renderUser(user) {
     callButton.onclick = () => {
       const phone = user.primaryPhone.replace(/\D/g, ""); // strip non-digits
       const telURL = `tel:${phone}`;
-      console.log("CALL NOW button clicked:", telURL);
+      // console.log("CALL NOW button clicked:", telURL);
       window.location.href = telURL;
     };
 
@@ -210,7 +210,7 @@ async function renderUser(user) {
   // SECTION: Update Realtor Listings
   const listings = await getListings();
   const listingsContainer = document.getElementById("isotop-gallery-wrapper");
-  console.log("Listings loaded:", listings.length);
+  // console.log("Listings loaded:", listings.length);
 
   // Filter listings for the specific agent
   const userListings = listings.filter((listing) => {
@@ -230,7 +230,7 @@ async function renderUser(user) {
     );
   });
 
-  console.log("Filtered user listings:", userListings.length);
+  // console.log("Filtered user listings:", userListings.length);
 
   // Clear previous content
   listingsContainer.innerHTML = `<div class="grid-sizer"></div>`;

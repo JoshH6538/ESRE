@@ -10,7 +10,7 @@ export async function getBranches() {
 
   // Check cache validity
   if (cached && expiry && Date.now() < parseInt(expiry, 10)) {
-    console.log("Using cached branch data");
+    console.log("Using cached branch data.");
     try {
       return JSON.parse(cached);
     } catch {
@@ -23,7 +23,7 @@ export async function getBranches() {
   }
 
   // Fetch fresh data
-  console.log("Fetching branches...");
+  // console.log("Fetching branches...");
   const branches = await allBranches();
   if (!branches || branches.length === 0) {
     console.warn("No branches found or API call failed.");

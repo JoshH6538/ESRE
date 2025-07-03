@@ -27,7 +27,7 @@ async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
 }
 
 export async function findRealtorById(id) {
-  console.log("Fetching realtor by ID:", id);
+  // console.log("Fetching realtor by ID:", id);
   return await fetchWithRetry(BASE_URL, {
     method: "POST",
     headers: {
@@ -62,9 +62,9 @@ export async function allBranches() {
 }
 
 export async function allListings() {
-  console.log("allListings called");
+  // console.log("allListings called");
   var url = BASE_URL + "/listings";
-  console.log("Fetching listings from:", url);
+  // console.log("Fetching listings from:", url);
   return await fetchWithRetry(url, {
     method: "POST",
     headers: {
