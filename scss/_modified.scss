@@ -344,3 +344,7 @@ h5:hover,
 h6:hover {
   cursor: default;
 }
+
+.theme-main-menu .gap-one {
+  transition: padding 0.4s ease-out;
+}

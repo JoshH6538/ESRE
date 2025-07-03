@@ -13,7 +13,7 @@
     } else {
       header.removeClass("fixed");
       logoImg.attr("src", "images/es/ESHL-RES-LOGO.png"); // dark version
-      logoImg.height(45); // adjust height for fixed header
+      logoImg.height(50); // adjust height for fixed header
     }
   });
 })(jQuery);
