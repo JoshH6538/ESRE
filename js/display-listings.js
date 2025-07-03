@@ -11,7 +11,7 @@ async function loadListings() {
   if (sortSelect) {
     sortSelect.addEventListener("change", () => {
       console.log("Sort changed to:", sortSelect.value);
-      const sorted = sortListings(listings, sortSelect.value);
+      const sorted = sortListings(listingData, sortSelect.value);
       renderListings(sorted);
     });
   }
