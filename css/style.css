@@ -16798,9 +16798,21 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
   transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-.footer-three .footer-nav-link a:hover {
-  color: #007dab;
-  transform: translateX(20px) scale(1.05);
+@media screen and (max-width: 991px) {
+  .footer-three .footer-nav-link a:hover {
+    color: #007dab;
+    transform: scale(1.1);
+  }
+}
+@media screen and (min-width: 992px) {
+  .footer-three .footer-nav-link a:hover {
+    color: #007dab;
+    transform: translateX(20px) scale(1.05);
+  }
+}
+.footer-title:hover,
+.footer-title:focus {
+  cursor: default;
 }
 
 /*# sourceMappingURL=style.css.map */
