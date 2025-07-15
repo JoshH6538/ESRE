@@ -25,6 +25,12 @@ async function loadRealtors() {
     const lastNameB = (b.lastName ?? "").toLowerCase();
     return lastNameA.localeCompare(lastNameB);
   });
+  // Move all no image cards to the end
+  allRealtorsData.sort((a, b) => {
+    const hasIconA = Boolean(a.iconURL);
+    const hasIconB = Boolean(b.iconURL);
+    return hasIconB - hasIconA; // false (0) goes after true (1)
+  });
   renderRealtors(allRealtorsData);
   updateResultsCount(allRealtorsData.length);
 }
@@ -61,19 +67,24 @@ function renderRealtors(realtorArray) {
 
     const branch = branchMap.get(realtor.branchId);
     const branchName = branch?.name ?? "Unknown Branch";
+    const dre = realtor.dre ? `DRE: ${realtor.dre}` : "No DRE";
     const col = document.createElement("div");
     col.className = "col-xl-3 col-md-4 col-sm-6";
 
     col.innerHTML = `
       <div class="agent-card-two position-relative z-1 mb-50 wow fadeInUp">
         <div class="media position-relative overflow-hidden">
-          <div class="tag bg-white position-absolute text-uppercase">${branchName}</div>
-          <img
-            loading="lazy"
-            src="${iconURL}"
-            class="agent-img w-100 tran5s"
-            alt=""
-          >
+          <div class="tag bg-white position-absolute text-uppercase">${dre}</div>
+          <a href="realtor_details.html?userId=${
+            realtor.userId
+          }" class="position-relative d-block">
+            <img
+              loading="lazy"
+              src="${iconURL}"
+              class="agent-img w-100 tran5s"
+              alt=""
+            >
+          </a>
         </div>
         <div class="text-center pt-30">
           <h6 class="name">
@@ -104,6 +115,12 @@ function renderRealtors(realtorArray) {
         !branch.name.toLowerCase().includes(" fl") &&
         !branch.name.toLowerCase().includes("fl ")
       );
+    });
+    // Move all no image cards to the end
+    sortedBranches.sort((a, b) => {
+      const hasIconA = Boolean(a.iconURL);
+      const hasIconB = Boolean(b.iconURL);
+      return hasIconB - hasIconA; // false (0) goes after true (1)
     });
     // console.log("[Filter] Branches after CA filter:", sortedBranches);
     sortedBranches.forEach((branch) => {
@@ -198,6 +215,12 @@ document
       clearBtn.classList.add("d-none");
       // console.log("[UI] Hiding Clear Filters button");
     }
+    // Move all no image cards to the end
+    sortedFiltered.sort((a, b) => {
+      const hasIconA = Boolean(a.iconURL);
+      const hasIconB = Boolean(b.iconURL);
+      return hasIconB - hasIconA; // false (0) goes after true (1)
+    });
 
     renderRealtors(sortedFiltered);
     updateResultsCount(sortedFiltered.length);
@@ -230,6 +253,7 @@ document.getElementById("clearFiltersBtn").addEventListener("click", () => {
 
   // Hide the button again
   document.getElementById("clearFiltersBtn").classList.add("d-none");
+  // Move all no image cards to the end
 
   // Re-render all realtors
   renderRealtors(allRealtorsData);
@@ -308,6 +332,12 @@ document.getElementById("realtorSearchForm").addEventListener("submit", (e) => {
 
   const currentSort = document.getElementById("sortSelect").value;
   const sortedFiltered = sortRealtors(filtered, currentSort);
+  // Move all no image cards to the end
+  sortedFiltered.sort((a, b) => {
+    const hasIconA = Boolean(a.iconURL);
+    const hasIconB = Boolean(b.iconURL);
+    return hasIconB - hasIconA; // false (0) goes after true (1)
+  });
 
   if (sortedFiltered.length === 0) {
     document.getElementById("realtorContainer").innerHTML =
@@ -336,6 +366,12 @@ function sortRealtors(data, sortBy) {
 // Sort dropdown listener
 document.getElementById("sortSelect").addEventListener("change", (e) => {
   const sorted = sortRealtors(allRealtorsData, e.target.value);
+  // Move all no image cards to the end
+  sorted.sort((a, b) => {
+    const hasIconA = Boolean(a.iconURL);
+    const hasIconB = Boolean(b.iconURL);
+    return hasIconB - hasIconA; // false (0) goes after true (1)
+  });
   renderRealtors(sorted);
   updateResultsCount(sorted.length);
 });

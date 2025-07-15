@@ -21,6 +21,9 @@ async function loadListingDetails() {
 function renderListingDetails(listing) {
   // Basic property info
   const address = `${listing.UnparsedAddress || ""}, ${listing.City || ""}`;
+  if (address.trim()) {
+    window.document.title = `${address || "Listing Details"} | ESRE`;
+  }
   document.querySelector(".property-titlee").textContent =
     listing.CountyOrParish || "Property";
   document.querySelector(

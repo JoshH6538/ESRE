@@ -18,7 +18,7 @@
 }
 #navbarNav > ul > li > a:hover {
   font-size: larger;
-  color: $color-one;
+  color: $color-one !important;
 }
 
 // .theme-main-menu.menu-overlay {
@@ -215,11 +215,12 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
 
 // Card styles for popular locations cards (counties)
 .card-style-seven {
-  flex: 1 1 0;
-  max-width: 300px; /* or whatever size fits all on one line */
-  max-height: 300px;
+  flex: 0 0 auto;
+  max-width: 275px; /* or whatever size fits all on one line */
+  max-height: 275px;
   min-width: 250px;
   min-height: 250px;
+  aspect-ratio: 1 / 1 !important;
 }
 .wrapper {
   flex-wrap: nowrap;
@@ -347,4 +348,13 @@ h6:hover {
 
 .theme-main-menu .gap-one {
   transition: padding 0.4s ease-out;
+}
+
+.name a {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.agent-img {
+  transition: transform 0.8s ease;
+  transform: scale(0.95);
 }

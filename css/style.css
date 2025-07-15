@@ -7768,11 +7768,12 @@ iframe {
   color: #9d9d9d;
 }
 .agent-card-two:hover .agent-img {
-  transform: scale3d(1.1, 1.1, 1) rotate(2deg);
-  opacity: 0.8;
+  cursor: pointer;
+  transform: scale(1);
 }
 .agent-card-two:hover .name a {
-  text-decoration: underline;
+  transform: scale(1.05);
+  color: #007dab;
 }
 
 .pricing-nav-one .nav {
@@ -16517,7 +16518,7 @@ html.with-fancybox body.hide-scrollbar {
 
 #navbarNav > ul > li > a:hover {
   font-size: larger;
-  color: #007dab;
+  color: #007dab !important;
 }
 
 .feedback-section-six {
@@ -16700,11 +16701,12 @@ header.theme-main-menu.fixed .right-widget ul li a:hover {
 }
 
 .card-style-seven {
-  flex: 1 1 0;
-  max-width: 300px; /* or whatever size fits all on one line */
-  max-height: 300px;
+  flex: 0 0 auto;
+  max-width: 275px; /* or whatever size fits all on one line */
+  max-height: 275px;
   min-width: 250px;
   min-height: 250px;
+  aspect-ratio: 1/1 !important;
 }
 
 .wrapper {
@@ -16823,6 +16825,15 @@ h6:hover {
 
 .theme-main-menu .gap-one {
   transition: padding 0.4s ease-out;
+}
+
+.name a {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.agent-img {
+  transition: transform 0.8s ease;
+  transform: scale(0.95);
 }
 
 /*# sourceMappingURL=style.css.map */
