@@ -27,6 +27,7 @@ export async function getListings() {
   }
 
   const listings = await allListings();
+  console.log("Fetched listings from API:", listings);
   if (!Array.isArray(listings) || listings.length === 0) {
     console.warn("No listings returned from API.");
     return [];
