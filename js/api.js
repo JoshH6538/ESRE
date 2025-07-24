@@ -9,17 +9,21 @@ async function fetchWithRetry(url, options, retries = 3, delay = 1000) {
     try {
       const response = await fetch(url, options);
       console.log(`Attempt ${attempt} to fetch ${url}`);
+
+      if (options.type) console.log("Request Type:", options.type);
       if (!response.ok) throw new Error(`Status ${response.status}`);
       if (!response.ok) console.warn("Response Message: ", response.message);
       const data = await response.json();
-      if (!Array.isArray(data)) {
-        if (data.value && Array.isArray(data.value)) {
-          return data.value; // handle case where data is wrapped in 'value'
-        } else throw new Error("Expected array");
-      }
+      // console.log("Retrieved:", data);
+      // if (!Array.isArray(data)) {
+      //   if (data.value && Array.isArray(data.value)) {
+      //     return data.value; // handle case where data is wrapped in 'value'
+      //   } else throw new Error("Expected array");
+      // }
       return data;
     } catch (err) {
       console.warn(`Attempt ${attempt} failed:`, err.message);
+
       if (attempt < retries) await new Promise((res) => setTimeout(res, delay));
     }
   }
@@ -72,4 +76,68 @@ export async function allListings() {
     },
     body: JSON.stringify({}),
   });
+}
+
+// ------------ REVIEWS ------------
+
+export async function findUserReviews(userId) {
+  return await fetchWithRetry(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ type: "findUserReviews", userId }),
+  });
+}
+
+export async function addReview(userId, reviewer, rating, message = null) {
+  console.log("Adding review for user:", userId);
+  return await fetchWithRetry(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      type: "addReview",
+      userId,
+      reviewer,
+      rating,
+      message,
+    }),
+  });
+}
+
+// Google reCAPTCHA verification function
+export async function verifyRecaptcha(token) {
+  const response = await fetchWithRetry(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      action: "verifyRecaptcha",
+      recaptchaToken: token,
+      type: "",
+    }),
+  });
+  return response;
+}
+
+// ChatGPT integration function
+export async function chatAPI(bodyData) {
+  const response = await fetch(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      action: "chatAPI",
+      role: "realEstate",
+      message: bodyData.message,
+      page: window.location.pathname,
+      history: bodyData.history || [],
+    }),
+  });
+
+  return await response.json();
 }

@@ -1,6 +1,6 @@
-import { findRealtorById } from "./retool-api.js";
+import { addReview, verifyRecaptcha } from "./api.js";
 import { getBranches, arrayToMap } from "./branch-data.js";
-import { getUserData } from "./user-data.js";
+import { getUserData, getUserReviews } from "./user-data.js";
 import { getListings } from "./listing-data.js";
 
 // Grab the userId from the URL query parameters
@@ -32,6 +32,16 @@ async function loadUserCached(userId) {
   if (!user) {
     console.warn(`No user found for ID: ${userId}`);
     return;
+  }
+
+  // SECTION: Fetch user reviews
+  const reviews = await getUserReviews(userId);
+
+  console.log("User reviews fetched:", reviews);
+  if (reviews && reviews.length > 0) {
+    user.reviews = reviews;
+  } else {
+    user.reviews = [];
   }
   // console.log("User found in cache:", user);
 
@@ -111,17 +121,17 @@ async function renderUser(user) {
 
   // SECTION: Update image wrapper with profile photo and tag
   const wrapper = document.getElementById("realtorImageWrapper");
-  const iconURL = user.iconURL?.trim() || "images/lazy.svg";
+  const iconURL =
+    user.iconURL?.trim() ||
+    "https://equitysmartloans.com/wp-content/uploads/2022/05/placeHolder.jpeg";
 
-  wrapper.classList.toggle("bg-dark", !user.iconURL?.trim());
-  wrapper.classList.toggle("bg-white", !!user.iconURL?.trim());
   wrapper.style.backgroundImage = `url(${iconURL})`;
   wrapper.style.backgroundSize = "contain";
   wrapper.style.backgroundPosition = "center";
 
   wrapper.innerHTML = `
     <div class="tag bg-white position-absolute text-uppercase" style="top: 50px; left: 10px;">
-      ${branchName}
+      DRE: ${user["dre"] || "NO DRE"} 
     </div>
   `;
 
@@ -316,6 +326,106 @@ async function renderUser(user) {
 
     listingsContainer.appendChild(listingItem);
   }
+  // SECTION: User Reviews
+  const commentsSection = document.getElementById("commentsSection");
+  const commentsContainer = document.getElementById("commentsContainer");
+  commentsContainer.innerHTML = ""; // Clear previous comments
+  const commentsHeader = document.createElement("h3");
+  commentsHeader.className = "blog-inner-title pb-35";
+  commentsHeader.textContent = `${user.reviews.length} Reviews`;
+  const commentForm = document.getElementById("commentForm");
+  if (user.reviews.length === 0) {
+    commentsContainer.classList.add("d-none", "col-0");
+    commentForm.classList.add("col-12");
+    commentForm.classList.remove("col-lg-5");
+  }
+  commentsContainer.appendChild(commentsHeader);
+  // SECTION: Render each review
+  user.reviews.forEach((review) => {
+    const comment = document.createElement("div");
+    comment.className = "comment position-relative d-flex mb-30";
+    let starsHtml = "";
+    for (let i = 1; i <= review.rating; i++) {
+      starsHtml += `&#9733;`; // Filled star
+    }
+    comment.innerHTML = `
+      <div class="comment-text">
+        <h5 class="mb-10">${review.reviewer}</h5>
+        <span class="date">${new Date(
+          review.dateSubmitted
+        ).toLocaleDateString()}</span>
+        <p style="color: #007dab; font-size: 1.5em">${starsHtml}</p>
+        <p>${review.message}</p>
+      </div>
+    `;
+    commentsContainer.appendChild(comment);
+  });
+
+  // SECTION: Add review form
+  const reviewForm = document.getElementById("reviewForm");
+  reviewForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const submitButton = document.getElementById("submitReviewBtn");
+
+    submitButton.disabled = true; // Disable button to prevent multiple submissions
+    submitButton.textContent = "Submitting";
+    submitButton.classList.add("inactive-input");
+    const loadingImg = document.createElement("img");
+    loadingImg.src = "images/lazyBlue.svg";
+
+    document.getElementById("reviewFormSubmission").appendChild(loadingImg);
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const reviewer = formData.get("reviewer").trim();
+    const rating = parseInt(formData.get("rating"), 10);
+
+    const message = formData.get("message").trim();
+
+    try {
+      const token = await grecaptcha.execute(
+        "6LdMGNspAAAAAI7hAtxj18KrkVYCp-kQq1CPiymO",
+        {
+          action: "submit_review",
+        }
+      );
+      console.log("reCAPTCHA token received:", token);
+      const response = await fetch(
+        "https://v3tnqbn900.execute-api.us-east-1.amazonaws.com/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            recaptchaToken: token,
+            action: "verifyRecaptcha",
+          }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (result.error) {
+        alert("reCAPTCHA failed or API error");
+      } else {
+        await addReview(userId, reviewer, rating, message);
+        reviewForm.innerHTML = `
+            <p class="text-success">Thank you for your review!</p>
+            <p class="text-muted">Your feedback is valuable to us.</p>
+          `;
+        // Set cooldown for another review submission through cache
+        const cooldownTime = 60 * 60 * 1000; // 1 hour in milliseconds
+        const cooldownEnd = Date.now() + cooldownTime;
+        localStorage.setItem(
+          "reviewTimeCache",
+          JSON.stringify({ [userId]: cooldownEnd })
+        );
+      }
+    } catch (err) {
+      console.error("Submit error:", err);
+      alert("Something went wrong.");
+    }
+  });
 }
 
 // SECTION: Initialize the page
