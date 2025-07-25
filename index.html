@@ -239,6 +239,21 @@
           </div>
           <!-- /.tab-content -->
         </div>
+        <div
+          class="w-100 d-flex justify-content-center position-absolute bottom-0"
+          id="arrowContainer"
+        >
+          <i class="bi bi-chevron-compact-down arrow-down"></i>
+        </div>
+        <script>
+          window.addEventListener("scroll", function () {
+            if (window.scrollY > 0) {
+              document.getElementById("arrowContainer").style.opacity = 0;
+            } else {
+              document.getElementById("arrowContainer").style.opacity = 1;
+            }
+          });
+        </script>
         <!-- /.search-wrapper-four -->
       </div>
       <!-- /.hero-banner-eight -->

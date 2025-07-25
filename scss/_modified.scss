@@ -527,8 +527,33 @@ h6:hover {
   }
 }
 
+@keyframes flashDown {
+  0% {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 0.6;
+    transform: translateY(0);
+  }
+}
+
 .grecaptcha-badge {
   z-index: 10 !important;
   position: fixed !important;
   bottom: 70px !important;
+}
+
+.arrow-down {
+  color: white !important;
+  opacity: 0.6;
+  font-size: 8rem;
+  animation: flashDown 3s infinite;
+}
+#arrowContainer {
+  transition: opacity 0.5s ease;
 }
